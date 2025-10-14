@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class VoiceSetting : MonoBehaviour
 {
-
+    //使用するマイク
     [SerializeField] private string m_DeviceName;
+    
     private AudioClip m_AudioClip;
     private int m_LastAudioPos;
     private float m_AudioLevel;
@@ -17,9 +18,11 @@ public class VoiceSetting : MonoBehaviour
     {
         string targetDevice = "";
 
+        //使用できるマイクの探索
         foreach (var device in Microphone.devices)
         {
-            Debug.Log($"Device Name: {device}");
+            //Debug.Log($"Device Name: {device}");
+            //使用するマイクを適用
             if (device.Contains(m_DeviceName))
             {
                 targetDevice = device;
@@ -27,15 +30,21 @@ public class VoiceSetting : MonoBehaviour
         }
 
         Debug.Log($"=== Device Set: {targetDevice} ===");
+        
+        //録音開始
         m_AudioClip = Microphone.Start(targetDevice, true, 10, 48000);
     }
 
     void Update()
     {
         float[] waveData = GetUpdatedAudio();
+
         if (waveData.Length == 0) return;
 
+        //ボリュームデータ代入
         m_AudioLevel = waveData.Average(Mathf.Abs);
+
+
         m_Cube.transform.localScale = new Vector3(1, 1 + m_AmpGain * m_AudioLevel, 1);
     }
 
@@ -75,4 +84,11 @@ public class VoiceSetting : MonoBehaviour
 
         return waveData;
     }
+
+    //音声ボリュームの取得
+    public float GetVoiceVolume
+    {
+        get { return m_AudioLevel; }
+    }
+
 }
