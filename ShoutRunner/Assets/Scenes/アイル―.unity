@@ -233,7 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DeviceName: "\u30DE\u30A4\u30AF (2- HyperX SoloCast)"
   m_Cube: {fileID: 2105650528}
-  m_AmpGain: 100
+  m_AmpGain: 55
 --- !u!1 &297404447
 GameObject:
   m_ObjectHideFlags: 0
