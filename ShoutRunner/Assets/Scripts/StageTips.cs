@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stage : MonoBehaviour
+public class StageTips : MonoBehaviour
 {
-    //int型を変数StageTipSizeで宣言します。
-    const int StageTipSize = 30;
+    //ステージチップのサイズ
+    const int StageTipSize = 12;
     //int型を変数currentTipIndexで宣言します。
-    int currentTipIndex;
-    //ターゲットキャラクターの指定が出来る様にするよ
+    private int currentTipIndex;
+    [Header("ターゲットのキャラ")]
     public Transform character;
     //ステージチップの配列
     public GameObject[] stageTips;
@@ -42,11 +42,11 @@ public class Stage : MonoBehaviour
     void UpdateStage(int toTipIndex)
     {
         if (toTipIndex <= currentTipIndex) return;
-        //指定のステージチップまで生成するよ
+        //指定のステージチップまで生成
         for (int i = currentTipIndex + 1; i <= toTipIndex; i++)
         {
             GameObject stageObject = GenerateStage(i);
-            //生成したステージチップを管理リストに追加して、
+            //生成したステージチップを管理リストに追加
             generatedStageList.Add(stageObject);
         }
         //ステージ保持上限になるまで古いステージを削除します。
@@ -72,5 +72,4 @@ public class Stage : MonoBehaviour
         generatedStageList.RemoveAt(0);
         Destroy(oldStage);
     }
-
 }
