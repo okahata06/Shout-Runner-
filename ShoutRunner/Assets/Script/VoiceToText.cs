@@ -9,7 +9,7 @@ public class VoiceToText : MonoBehaviour
     KeywordRecognizer keywordRecognizer;
 
     //認識判定したい単語
-    private string[] keywords = new string[] { "ジャンプ", "進め", "止まれ", "攻撃" };
+    private string[] keywords = new string[] { "ジャンプ", "進め", "止まれ", "攻撃" , "なんでやねん" };
     void Start()
     {
         // キーワード認識の初期化
