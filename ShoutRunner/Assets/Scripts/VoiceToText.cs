@@ -8,6 +8,8 @@ public class VoiceToText : MonoBehaviour
 
     KeywordRecognizer keywordRecognizer;
 
+    string recognizedText = "";
+
     //認識判定したい単語
     private string[] keywords = new string[] { "ジャンプ", "進め", "止まれ", "攻撃" , "なんでやねん" };
     void Start()
@@ -20,10 +22,13 @@ public class VoiceToText : MonoBehaviour
         Debug.Log("音声認識開始");
     }
 
+    //音声入力があったと判定されたときに呼ばれる　　　　　　　認識された音声データ
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
         Debug.Log($"認識された言葉: {args.text}");
         Debug.Log($"信頼度: {args.confidence}");
+
+        recognizedText = args.text;
 
         // 認識された言葉に応じて処理
         switch (args.text)
@@ -42,6 +47,11 @@ public class VoiceToText : MonoBehaviour
                 break;
         }
     }
+
+    public string GetRecognizedText
+    {
+        get { return recognizedText; }
+    }  
 
     void Jump()
     {
