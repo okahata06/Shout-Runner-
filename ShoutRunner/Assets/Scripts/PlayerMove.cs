@@ -11,24 +11,23 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         voiceToText = GetComponent<VoiceToText>();
-        recognizedText = voiceToText.GetRecognizedText;
+        recognizedText = voiceToText.GetSetRecognizedText;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 音声認識で取得したテキストが変化したら
-        if (recognizedText != voiceToText.GetRecognizedText)
+        // 音声認識で取得したテキストが変化してたら
+        if (recognizedText != voiceToText.GetSetRecognizedText)
         {
-            recognizedText = voiceToText.GetRecognizedText;
+            recognizedText = voiceToText.GetSetRecognizedText;
+            voiceToText.GetSetRecognizedText = "";
+            Debug.Log("プレイヤーで取得：" + recognizedText);
+            Debug.Log("voiceToTextで取得：" + voiceToText.GetSetRecognizedText);
+
+
         }
-        Debug.Log("プレイヤーで取得：" + recognizedText);
-        Debug.Log("voiceToTextで取得：" + voiceToText.GetRecognizedText);
 
-
-        //テキストをリセット
-        recognizedText = " ";
     }
-
 }
