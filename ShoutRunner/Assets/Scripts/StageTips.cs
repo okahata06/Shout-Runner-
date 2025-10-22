@@ -10,13 +10,13 @@ public class StageTips : MonoBehaviour
     private int currentTipIndex;
     [Header("ターゲットのキャラ")]
     public Transform character;
-    //ステージチップの配列
+    [Header("ステージチップ格納用配列")]
     public GameObject[] stageTips;
     //自動生成する時に使う変数startTipIndex
     public int startTipIndex;
-    //ステージ生成の先読み個数
+    [Header("ステージ生成数")]
     public int preInstantiate;
-    //作ったステージチップの保持リスト
+    [Header("生成されたステージリスト")]
     public List<GameObject> generatedStageList = new List<GameObject>();
 
     void Start()
