@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    Rigidbody rb;
     string recognizedText;
     VoiceToText voiceToText;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         voiceToText = GetComponent<VoiceToText>();
         recognizedText = voiceToText.GetSetRecognizedText;
 
@@ -20,7 +22,7 @@ public class PlayerMove : MonoBehaviour
     {
         // 音声認識で取得したテキストが変化してたら
         if (recognizedText != voiceToText.GetSetRecognizedText)
-        {
+        {rb.velocity=Vector3.forward*5;
             recognizedText = voiceToText.GetSetRecognizedText;
             voiceToText.GetSetRecognizedText = "";
             Debug.Log("プレイヤーで取得：" + recognizedText);
