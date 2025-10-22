@@ -37,7 +37,8 @@ public class VoiceSetting : MonoBehaviour
         //ボリュームデータ代入
 
         m_AudioLevel = waveData.Average(Mathf.Abs);
-       // Debug.Log(m_AudioLevel);
+
+        Debug.Log(m_AudioLevel);
 
     }
 
