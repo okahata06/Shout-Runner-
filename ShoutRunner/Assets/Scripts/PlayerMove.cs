@@ -6,11 +6,15 @@ public class PlayerMove : MonoBehaviour
 {
     Rigidbody rb;
     Transform tr;
+    [SerializeField,Header("ˆÚ“®‘¬“x")]
+    float speed = 3f;
+    Vector3 pos;
     Vector3 forward_rot;
     Vector3 left_rot;
     Vector3 right_rot;
     string recognizedText;
     VoiceToText voiceToText;
+    VoiceToText.VoiceCommand command;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +22,10 @@ public class PlayerMove : MonoBehaviour
         tr = GetComponent<Transform>();
         voiceToText = GetComponent<VoiceToText>();
         recognizedText = voiceToText.GetSetRecognizedText;
+        
+        
 
+        pos= tr.position;
         forward_rot = tr.eulerAngles;
         left_rot = new Vector3(forward_rot.x, forward_rot.y - 45,forward_rot.z);
         right_rot = new Vector3(forward_rot.x, forward_rot.y + 45, forward_rot.z);
@@ -39,7 +46,16 @@ public class PlayerMove : MonoBehaviour
 
 
         }
-
+        if (transform.position.x < pos.x - 3&&command==VoiceToText.VoiceCommand.‚Ð‚¾‚è)
+        {
+            rb.velocity = Vector3.forward * speed;
+            transform.rotation = Quaternion.Euler(forward_rot);
+        }
+        if (transform.position.x > pos.x + 3 && command == VoiceToText.VoiceCommand.‚Ý‚¬)
+        {
+            rb.velocity = Vector3.forward * speed;
+            transform.rotation = Quaternion.Euler(forward_rot);
+        }
 
     }
 
@@ -52,15 +68,17 @@ public class PlayerMove : MonoBehaviour
         switch (text)
         {
             case nameof(VoiceToText.VoiceCommand.‚Ð‚¾‚è):
-                rb.velocity = new Vector3(-1,0,1) * 5;
+                command = VoiceToText.VoiceCommand.‚Ð‚¾‚è;
+                rb.velocity = new Vector3(-1,0,1) * speed;
                 transform.rotation = Quaternion.Euler(left_rot);
                 break;
             case nameof(VoiceToText.VoiceCommand.‚Ý‚¬):
-                rb.velocity = new Vector3(1, 0, 1) * 5;
+                command = VoiceToText.VoiceCommand.‚Ý‚¬;
+                rb.velocity = new Vector3(1, 0, 1) * speed;
                 transform.rotation = Quaternion.Euler(right_rot);
                 break;
             case nameof(VoiceToText.VoiceCommand.‚È‚ñ‚Å‚â‚Ë‚ñ):
-                rb.velocity = Vector3.forward * 5;
+                rb.velocity = Vector3.forward * speed;
                 transform.rotation = Quaternion.Euler(forward_rot);
                 break;
 
