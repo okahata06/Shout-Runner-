@@ -8,6 +8,11 @@ public class PlayerMove : MonoBehaviour
     Transform tr;
     [SerializeField,Header("移動速度")]
     float speed = 3f;
+    [SerializeField,Header("跳躍力")]
+    Vector3 jump_vec = new Vector3(0,10,0);
+    float speedDecay=2f;
+    bool isJump = false;
+
     Vector3 pos;
     Vector3 forward_rot;
     Vector3 left_rot;
@@ -46,7 +51,27 @@ public class PlayerMove : MonoBehaviour
 
 
         }
-        if (transform.position.x < pos.x - 3&&command==VoiceToText.VoiceCommand.ひだり)
+
+        if(recognizedText==VoiceToText.VoiceCommand.ジャンプ.ToString()&&!isJump)
+        {
+            isJump = true;
+            rb.velocity+= jump_vec;
+            Debug.Log("velocityddd"+rb.velocity);
+        }
+        if(isJump)
+        {
+            isJump = false;
+        }
+
+
+            if (transform.position.y<pos.y)
+        {
+            transform.position = new Vector3(transform.position.x, pos.y, transform.position.z);
+        }
+
+
+            //1レーン分移動したら直進に戻す
+            if (transform.position.x < pos.x - 3&&command==VoiceToText.VoiceCommand.ひだり)
         {
             rb.velocity = Vector3.forward * speed;
             transform.rotation = Quaternion.Euler(forward_rot);
@@ -81,11 +106,20 @@ public class PlayerMove : MonoBehaviour
                 rb.velocity = Vector3.forward * speed;
                 transform.rotation = Quaternion.Euler(forward_rot);
                 break;
+                case nameof(VoiceToText.VoiceCommand.伏せ):
+                rb.velocity = Vector3.forward * speed * 0.5f;
+                transform.rotation = Quaternion.Euler(new Vector3(90,0,0));
+                break;
 
         }
 
+        
 
-
+    }
+    void JumpMove()
+    {
+    
+    
     }
 
 }
