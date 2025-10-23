@@ -13,8 +13,8 @@ public class VoiceToText : MonoBehaviour
 
     //認識判定したい単語
     private string[] keywords = new string[]
-    { "ジャンプ", "進め", "止まれ", "攻撃" , "なんでやねん" ,
-      "ひだり", "みぎ", "伏せ"
+    { VoiceCommand.ジャンプ.ToString(),VoiceCommand.伏せ.ToString(),VoiceCommand.なんでやねん.ToString(),
+      VoiceCommand.ひだり.ToString(),VoiceCommand.みぎ.ToString()
     };
     void Start()
     {
@@ -35,32 +35,24 @@ public class VoiceToText : MonoBehaviour
 
         recognizedText = args.text;
 
+
         // 認識された言葉に応じて処理
         //動きはPlayerMove.csで実装
         switch (args.text)
         {
-            case "ジャンプ":
+            case nameof(VoiceCommand.ジャンプ)or nameof(VoiceCommand.とべ):
                 Debug.Log("ジャンプ");
                 break;
-            case "進め":
+            case nameof(VoiceCommand.なんでやねん):
                 Debug.Log("進め");
                 break;
-            case "止まれ":
-                Debug.Log("止まれ");
-                break;
-            case "攻撃":
-                Debug.Log("攻撃");
-                break;
-            case "なんでやねん":
-                Debug.Log("なんでやねん");
-                break;
-            case "ひだり":
+            case nameof(VoiceCommand.ひだり):
                 Debug.Log("ひだり");
                 break;
-            case "みぎ":
+            case nameof(VoiceCommand.みぎ):
                 Debug.Log("みぎ");
                 break;
-            case "伏せ":
+            case nameof(VoiceCommand.伏せ):
                 Debug.Log("伏せ");
                 break;
         }
@@ -81,4 +73,16 @@ public class VoiceToText : MonoBehaviour
         }
         keywordRecognizer?.Dispose();
     }
+
+   public enum  VoiceCommand
+    {
+         ジャンプ,
+         とべ,
+         なんでやねん,
+         ひだり,
+            みぎ,
+            伏せ,
+    }
+
+
 }
