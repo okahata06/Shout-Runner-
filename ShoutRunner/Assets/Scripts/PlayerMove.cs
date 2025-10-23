@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     Rigidbody rb;
+    Transform tr;
+    Vector3 forward_rot;
+    Vector3 left_rot;
+    Vector3 right_rot;
     string recognizedText;
     VoiceToText voiceToText;
 
@@ -12,8 +16,13 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        tr = GetComponent<Transform>();
         voiceToText = GetComponent<VoiceToText>();
         recognizedText = voiceToText.GetSetRecognizedText;
+
+        forward_rot = tr.eulerAngles;
+        left_rot = new Vector3(forward_rot.x, forward_rot.y - 45,forward_rot.z);
+        right_rot = new Vector3(forward_rot.x, forward_rot.y + 45, forward_rot.z);
 
     }
 
@@ -34,18 +43,22 @@ public class PlayerMove : MonoBehaviour
 
     }
 
+    //à⁄ìÆÅAâÒì]èàóù
     void MoveByText(string text)
     {
         switch (text)
         {
             case "Ç–ÇæÇË":
-                rb.velocity = Vector3.left * 5;
+                rb.velocity = new Vector3(-1,0,1) * 5;
+                transform.rotation = Quaternion.Euler(left_rot);
                 break;
             case "Ç›Ç¨":
-                rb.velocity = Vector3.right * 5;
+                rb.velocity = new Vector3(1, 0, 1) * 5;
+                transform.rotation = Quaternion.Euler(right_rot);
                 break;
             case "Ç»ÇÒÇ≈Ç‚ÇÀÇÒ":
                 rb.velocity = Vector3.forward * 5;
+                transform.rotation = Quaternion.Euler(forward_rot);
                 break;
 
         }
