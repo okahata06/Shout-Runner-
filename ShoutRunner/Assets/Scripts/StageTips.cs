@@ -6,13 +6,12 @@ public class StageTips : MonoBehaviour
 {
     //ステージチップのサイズ
     const int StageTipSize = 12;
-    //int型を変数currentTipIndexで宣言します。
     private int currentTipIndex;
     [Header("ターゲットのキャラ")]
     public Transform character;
     [Header("ステージチップ格納用配列")]
     public GameObject[] stageTips;
-    //自動生成する時に使う変数startTipIndex
+    [Header("最初のステージチップ生成位置")]
     public int startTipIndex;
     [Header("ステージ生成数")]
     public int preInstantiate;
@@ -29,19 +28,20 @@ public class StageTips : MonoBehaviour
 
     void Update()
     {
-        //キャラクターの位置から現在のステージチップのインデックスを計算します
+        //キャラクターの位置から現在のステージチップのインデックスを計算
         int charaPositionIndex = (int)(character.position.z / StageTipSize);
-        //次のステージチップに入ったらステージの更新処理を行います。
+        //次のステージチップに入ったらステージの更新処理を行う
         if (charaPositionIndex + preInstantiate > currentTipIndex)
         {
             UpdateStage(charaPositionIndex + preInstantiate);
         }
 
     }
-    //指定のインデックスまでのステージチップを生成して、管理下におく
+    //指定のインデックスまでのステージチップを生成して管理下におく
     void UpdateStage(int toTipIndex)
     {
         if (toTipIndex <= currentTipIndex) return;
+
         //指定のステージチップまで生成
         for (int i = currentTipIndex + 1; i <= toTipIndex; i++)
         {
@@ -49,7 +49,7 @@ public class StageTips : MonoBehaviour
             //生成したステージチップを管理リストに追加
             generatedStageList.Add(stageObject);
         }
-        //ステージ保持上限になるまで古いステージを削除します。
+        //ステージ保持上限になるまで古いステージを削除
         while (generatedStageList.Count > preInstantiate + 2) DestroyOldestStage();
 
         currentTipIndex = toTipIndex;
@@ -59,13 +59,13 @@ public class StageTips : MonoBehaviour
     {
         int nextStageTip = Random.Range(0, stageTips.Length);
 
-        GameObject stageObject = (GameObject)Instantiate(
+        GameObject stageObject = Instantiate(
             stageTips[nextStageTip],
             new Vector3(0, 0, tipIndex * StageTipSize),
             Quaternion.identity);
         return stageObject;
     }
-    //一番古いステージを削除します
+    //一番古いステージを削除
     void DestroyOldestStage()
     {
         GameObject oldStage = generatedStageList[0];
