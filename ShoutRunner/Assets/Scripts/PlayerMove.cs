@@ -11,7 +11,6 @@ public class PlayerMove : MonoBehaviour
     Vector3 right_rot;
     string recognizedText;
     VoiceToText voiceToText;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -41,27 +40,32 @@ public class PlayerMove : MonoBehaviour
 
         }
 
+
     }
+
+    //曲がり角で方向転換を発言した場合、通路の中心まで来てから方向転換するようにする（曲がった最初は中心レーンから）
 
     //移動、回転処理
     void MoveByText(string text)
     {
+        //方向転換
         switch (text)
         {
-            case "ひだり":
+            case nameof(VoiceToText.VoiceCommand.ひだり):
                 rb.velocity = new Vector3(-1,0,1) * 5;
                 transform.rotation = Quaternion.Euler(left_rot);
                 break;
-            case "みぎ":
+            case nameof(VoiceToText.VoiceCommand.みぎ):
                 rb.velocity = new Vector3(1, 0, 1) * 5;
                 transform.rotation = Quaternion.Euler(right_rot);
                 break;
-            case "なんでやねん":
+            case nameof(VoiceToText.VoiceCommand.なんでやねん):
                 rb.velocity = Vector3.forward * 5;
                 transform.rotation = Quaternion.Euler(forward_rot);
                 break;
 
         }
+
 
 
     }
