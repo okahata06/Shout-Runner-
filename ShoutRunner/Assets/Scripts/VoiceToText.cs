@@ -40,7 +40,7 @@ public class VoiceToText : MonoBehaviour
         //動きはPlayerMove.csで実装
         switch (args.text)
         {
-            case nameof(VoiceCommand.ジャンプ)or nameof(VoiceCommand.とべ):
+            case nameof(VoiceCommand.ジャンプ) or nameof(VoiceCommand.とべ):
                 Debug.Log("ジャンプ");
                 break;
             case nameof(VoiceCommand.なんでやねん):
@@ -74,14 +74,15 @@ public class VoiceToText : MonoBehaviour
         keywordRecognizer?.Dispose();
     }
 
-   public enum  VoiceCommand
+    public enum VoiceCommand
     {
-         ジャンプ,
-         とべ,
-         なんでやねん,
-         ひだり,
-            みぎ,
-            伏せ,
+        ジャンプ,
+        とべ,
+        なんでやねん,
+        ひだり,
+        みぎ,
+        伏せ,
+        Null,
     }
 
 

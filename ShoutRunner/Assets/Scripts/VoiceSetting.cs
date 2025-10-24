@@ -34,11 +34,10 @@ public class VoiceSetting : MonoBehaviour
     {
         float[] waveData = GetUpdatedAudio();
         if (waveData.Length == 0) return;
-        //ボリュームデータ代入
-
+        //ボリュームデータ代入0～1
         m_AudioLevel = waveData.Average(Mathf.Abs);
 
-        Debug.Log(m_AudioLevel);
+        //Debug.Log(m_AudioLevel);
 
     }
 
