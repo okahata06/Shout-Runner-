@@ -6,6 +6,7 @@ public class StageTips : MonoBehaviour
 {
     //ステージチップのサイズ
     const int StageTipSize = 12;
+    //
     private int currentTipIndex;
     [Header("ターゲットのキャラ")]
     public Transform character;
