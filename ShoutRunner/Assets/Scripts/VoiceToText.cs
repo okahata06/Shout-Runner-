@@ -33,6 +33,7 @@ public class VoiceToText : MonoBehaviour
         Debug.Log($"認識された言葉: {args.text}");
         Debug.Log($"信頼度: {args.confidence}");
 
+        if(args.confidence==ConfidenceLevel.High)
         recognizedText = args.text;
 
 

@@ -48,8 +48,8 @@ public class PlayerMove : MonoBehaviour
             MoveByText(recognizedText);
             recognizedText = voiceToText.GetSetRecognizedText;
             voiceToText.GetSetRecognizedText = "";
-            Debug.Log("プレイヤーで取得：" + recognizedText);
-            Debug.Log("voiceToTextで取得：" + voiceToText.GetSetRecognizedText);
+            //Debug.Log("プレイヤーで取得：" + recognizedText);
+            //Debug.Log("voiceToTextで取得：" + voiceToText.GetSetRecognizedText);
 
            
         }
