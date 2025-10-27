@@ -6,11 +6,11 @@ public class PlayerMove : MonoBehaviour
 {
     Rigidbody rb;
     Transform tr;
-    [SerializeField,Header("移動速度")]
+    [SerializeField, Header("移動速度")]
     float speed = 3f;
-    [SerializeField,Header("跳躍力")]
-    Vector3 jump_vec = new Vector3(0,10,0);
-    float speedDecay=2f;
+    [SerializeField, Header("跳躍力")]
+    Vector3 jump_vec = new Vector3(0, 10, 0);
+    float speedDecay = 2f;
     bool isJump = false;
 
     float left_side;
@@ -20,6 +20,7 @@ public class PlayerMove : MonoBehaviour
     Vector3 left_rot;
     Vector3 right_rot;
     string recognizedText;
+    Rean rean = Rean.Center;
     VoiceToText voiceToText;
     VoiceToText.VoiceCommand command;
     // Start is called before the first frame update
@@ -29,13 +30,13 @@ public class PlayerMove : MonoBehaviour
         tr = GetComponent<Transform>();
         voiceToText = GetComponent<VoiceToText>();
         recognizedText = voiceToText.GetSetRecognizedText;
-        
-        
 
-        pos= tr.position;
-        left_side=pos.x - 3f;
+
+
+        pos = tr.position;
+        left_side = pos.x - 3f;
         forward_rot = tr.eulerAngles;
-        left_rot = new Vector3(forward_rot.x, forward_rot.y - 45,forward_rot.z);
+        left_rot = new Vector3(forward_rot.x, forward_rot.y - 45, forward_rot.z);
         right_rot = new Vector3(forward_rot.x, forward_rot.y + 45, forward_rot.z);
 
     }
@@ -56,12 +57,12 @@ public class PlayerMove : MonoBehaviour
         }
 
         //ジャンプ処理
-        if (recognizedText==VoiceToText.VoiceCommand.ジャンプ.ToString()&&!isJump)
+        if (recognizedText == VoiceToText.VoiceCommand.ジャンプ.ToString() && !isJump)
         {
             isJump = true;
-           // Debug.Log("isJump=true");
+            // Debug.Log("isJump=true");
 
-            rb.velocity+= jump_vec;
+            rb.velocity += jump_vec;
         }
         //ジャンプ中の処理
         else if (isJump)
@@ -71,46 +72,91 @@ public class PlayerMove : MonoBehaviour
             {
                 isJump = false;
                 command = VoiceToText.VoiceCommand.Null;
-               // Debug.Log("isJump=false");
+                // Debug.Log("isJump=false");
 
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
             }
         }
-        Debug.Log("velocityddd"+rb.velocity);
-        Debug.Log("pos"+tr.position);
+        //Debug.Log("velocityddd"+rb.velocity);
+        //Debug.Log("pos"+tr.position);
 
-
+        Debug.Log("command:" + command);
 
 
 
         //1レーン分移動したら直進に戻す
-        if (command==VoiceToText.VoiceCommand.ひだり)
+        if (command == VoiceToText.VoiceCommand.ひだり)
         {
             //左端
-            if (pos.x <= left_side )
+            if (rean == Rean.Left)
             {
                 rb.velocity = Vector3.forward * speed;
                 command = VoiceToText.VoiceCommand.Null;
-            tr.position = new Vector3(pos.x - 3, tr.position.y, tr.position.z);
                 tr.rotation = Quaternion.Euler(forward_rot);
             }
             //中央
-            else if (pos.x>= left_side-0.1f&& pos.x <= left_side+0.1f)
+            else if (rean == Rean.Center)
+            {
+
+                if (tr.position.x <= pos.x - 3)
+                {
+                    rean = Rean.Left;
+                    rb.velocity = Vector3.forward * speed;
+                    transform.rotation = Quaternion.Euler(forward_rot);
+                    command = VoiceToText.VoiceCommand.Null;
+                }
+            }
+            //右端
+            else if (rean == Rean.Right)
+            {
+                if (tr.position.x <= pos.x - 3)
+                {
+                    rean = Rean.Center;
+                    rb.velocity = Vector3.forward * speed;
+                    transform.rotation = Quaternion.Euler(forward_rot);
+                    command = VoiceToText.VoiceCommand.Null;
+                }
+
+            }
+
+
+
+        }
+        else if (command == VoiceToText.VoiceCommand.みぎ)
+        {
+            //左端
+            if (rean == Rean.Left)
+            {
+                if (tr.position.x >= pos.x + 3)
+                {
+                    rean = Rean.Center;
+                    rb.velocity = Vector3.forward * speed;
+                    transform.rotation = Quaternion.Euler(forward_rot);
+                    command = VoiceToText.VoiceCommand.Null;
+                }
+            }
+            //中央
+            else if (rean == Rean.Center)
+            {
+                Debug.Log("センターおるよ");
+                if (tr.position.x >= pos.x + 3)
+                {
+                    rean = Rean.Right;
+                    rb.velocity = Vector3.forward * speed;
+                    transform.rotation = Quaternion.Euler(forward_rot);
+                    command = VoiceToText.VoiceCommand.Null;
+                }
+            }
+            //右端
+            else if (rean == Rean.Right)
             {
                 rb.velocity = Vector3.forward * speed;
                 transform.rotation = Quaternion.Euler(forward_rot);
                 command = VoiceToText.VoiceCommand.Null;
-            }
-            
-        }
-        if (transform.position.x > pos.x + 3 && command == VoiceToText.VoiceCommand.みぎ)
-        {
-            rb.velocity = Vector3.forward * speed;
-            transform.rotation = Quaternion.Euler(forward_rot);
-            command = VoiceToText.VoiceCommand.Null;
-        }
 
+            }
+        }
     }
 
     //曲がり角で方向転換を発言した場合、通路の中心まで来てから方向転換するようにする（曲がった最初は中心レーンから）
@@ -130,7 +176,7 @@ public class PlayerMove : MonoBehaviour
         {
             case nameof(VoiceToText.VoiceCommand.ひだり):
                 command = VoiceToText.VoiceCommand.ひだり;
-                rb.velocity = new Vector3(-1,0,1) * speed;
+                rb.velocity = new Vector3(-1, 0, 1) * speed;
                 transform.rotation = Quaternion.Euler(left_rot);
                 break;
 
@@ -139,35 +185,44 @@ public class PlayerMove : MonoBehaviour
                 rb.velocity = new Vector3(1, 0, 1) * speed;
                 transform.rotation = Quaternion.Euler(right_rot);
                 break;
-            
+
             case nameof(VoiceToText.VoiceCommand.なんでやねん):
                 //追加の処理がないため必要なし↓
                 //command = VoiceToText.VoiceCommand.なんでやねん;
                 rb.velocity = Vector3.forward * speed;
                 transform.rotation = Quaternion.Euler(forward_rot);
                 break;
-            
+
             case nameof(VoiceToText.VoiceCommand.伏せ):
                 command = VoiceToText.VoiceCommand.伏せ;
                 rb.velocity = Vector3.forward * speed * 0.5f;
-                transform.rotation = Quaternion.Euler(new Vector3(90,0,0));
+                transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
                 break;
-            
-            case nameof(VoiceToText.VoiceCommand.ジャンプ)or nameof(VoiceToText.VoiceCommand.とべ):
+
+            case nameof(VoiceToText.VoiceCommand.ジャンプ) or nameof(VoiceToText.VoiceCommand.とべ):
                 command = VoiceToText.VoiceCommand.ジャンプ;
                 break;
 
         }
 
-        
+
 
     }
 
     void JumpMove()
     {
-    
-    
+
+
     }
+
+    //レーン位置保存用
+    enum Rean
+    {
+        Left,
+        Center,
+        Right,
+    }
+
 
     //別スクでコマンドがNullかどうかで点灯するUIをつくる用
     public string GetCommandText
