@@ -79,7 +79,7 @@ public class PlayerMove : MonoBehaviour
         //Debug.Log("velocityddd"+rb.velocity);
         //Debug.Log("pos"+tr.position);
 
-        Debug.Log("command:" + command);
+        //Debug.Log("command:" + command);
 
 
 

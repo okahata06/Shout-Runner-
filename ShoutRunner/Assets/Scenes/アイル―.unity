@@ -279,30 +279,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 412084340085684417, guid: 1a101681400f20a49892495c78a0a4b6, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 412084340085684417, guid: 1a101681400f20a49892495c78a0a4b6, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 412084340085684417, guid: 1a101681400f20a49892495c78a0a4b6, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4743701982465135853, guid: 1a101681400f20a49892495c78a0a4b6, type: 3}
-      propertyPath: speed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4743701982465135853, guid: 1a101681400f20a49892495c78a0a4b6, type: 3}
-      propertyPath: jump_vec.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5318063288322184189, guid: 1a101681400f20a49892495c78a0a4b6, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6335008399212078247, guid: 1a101681400f20a49892495c78a0a4b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.2
@@ -345,7 +321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6674801114473741853, guid: 1a101681400f20a49892495c78a0a4b6, type: 3}
       propertyPath: m_Name
-      value: Formal_With Mustache_Base
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
