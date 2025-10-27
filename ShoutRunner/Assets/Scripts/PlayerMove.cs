@@ -13,7 +13,6 @@ public class PlayerMove : MonoBehaviour
     float speedDecay = 2f;
     bool isJump = false;
 
-    float left_side;
 
     Vector3 pos;
     Vector3 forward_rot;
@@ -30,11 +29,10 @@ public class PlayerMove : MonoBehaviour
         tr = GetComponent<Transform>();
         voiceToText = GetComponent<VoiceToText>();
         recognizedText = voiceToText.GetSetRecognizedText;
-
+        command = VoiceToText.VoiceCommand.Null;
 
 
         pos = tr.position;
-        left_side = pos.x - 3f;
         forward_rot = tr.eulerAngles;
         left_rot = new Vector3(forward_rot.x, forward_rot.y - 45, forward_rot.z);
         right_rot = new Vector3(forward_rot.x, forward_rot.y + 45, forward_rot.z);
@@ -53,7 +51,7 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("プレイヤーで取得：" + recognizedText);
             Debug.Log("voiceToTextで取得：" + voiceToText.GetSetRecognizedText);
 
-
+           
         }
 
         //ジャンプ処理
