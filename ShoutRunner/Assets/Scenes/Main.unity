@@ -120,6 +120,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &384795682 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6335008399212078247, guid: 1a101681400f20a49892495c78a0a4b6, type: 3}
+  m_PrefabInstance: {fileID: 1259406411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &666063032
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +391,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1253341574322632984, guid: 2c733f95fcd58234db53740c5ff47e19, type: 3}
       propertyPath: destroyVolume
-      value: 0.8
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3394091108654605345, guid: 2c733f95fcd58234db53740c5ff47e19, type: 3}
       propertyPath: m_Name
@@ -394,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4925659347845952613, guid: 2c733f95fcd58234db53740c5ff47e19, type: 3}
       propertyPath: destroyVolume
-      value: 0.8
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7422208231575679462, guid: 2c733f95fcd58234db53740c5ff47e19, type: 3}
       propertyPath: m_LocalPosition.x
@@ -438,7 +443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8390275097998809668, guid: 2c733f95fcd58234db53740c5ff47e19, type: 3}
       propertyPath: destroyVolume
-      value: 0.8
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -455,7 +460,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1706878500}
   - component: {fileID: 1706878499}
-  - component: {fileID: 1706878498}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -463,18 +467,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1706878498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1706878497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7b226ae826c11f4194ba325babdb3ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1706878499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba506c4b38b7a124eabce4a4645a0660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 666063033}
+  character: {fileID: 384795682}
   stageTips:
   - {fileID: 1989576033079712494, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
   - {fileID: 6402126645148500609, guid: b5361218b1f6d7b48822a8c23be63a70, type: 3}
