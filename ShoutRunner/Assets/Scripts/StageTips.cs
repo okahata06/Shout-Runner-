@@ -55,7 +55,11 @@ public class StageTips : MonoBehaviour
 
         currentTipIndex = toTipIndex;
     }
-    //指定のインデックス位置にstageオブジェクトをランダムに生成
+    /// <summary>
+    /// 指定のインデックス位置にstageオブジェクトをランダムに生成
+    /// </summary>
+    /// <param name="tipIndex"></param>
+    /// <returns name="stageObject"></returns>
     GameObject GenerateStage(int tipIndex)
     {
         int nextStageTip = Random.Range(0, stageTips.Length);
@@ -66,7 +70,9 @@ public class StageTips : MonoBehaviour
             Quaternion.identity);
         return stageObject;
     }
-    //一番古いステージを削除
+    /// <summary>
+    /// 一番古いステージを削除
+    /// </summary>
     void DestroyOldestStage()
     {
         GameObject oldStage = generatedStageList[0];
