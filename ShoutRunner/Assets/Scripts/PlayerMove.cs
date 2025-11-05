@@ -13,6 +13,8 @@ public class PlayerMove : MonoBehaviour
     Vector3 jump_vec = new Vector3(0, 10, 0);
     float speedDecay = 2f;
     bool isJump = false;
+    bool isCurve = false;
+
 
     float time = 0;
     float crawlTime = 1.5f;
@@ -21,7 +23,7 @@ public class PlayerMove : MonoBehaviour
     Vector3 left_rot;
     Vector3 right_rot;
     string recognizedText;
-
+    float RotateSpeed = 700f;
     Rean rean = Rean.Center;
     VoiceToText voiceToText;
     VoiceToText.VoiceCommand command;
@@ -56,6 +58,7 @@ public class PlayerMove : MonoBehaviour
 
 
         }
+
 
         //伏せ処理
         if (anim.GetBool(animationState.Crawl.ToString()))
@@ -108,7 +111,6 @@ public class PlayerMove : MonoBehaviour
             {
                 rb.velocity = Vector3.forward * speed;
                 command = VoiceToText.VoiceCommand.Null;
-                tr.rotation = Quaternion.Euler(forward_rot);
             }
             //中央
             else if (rean == Rean.Center)
@@ -118,10 +120,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     rean = Rean.Left;
                     rb.velocity = Vector3.forward * speed;
-                    transform.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
-                    anim.SetBool(animationState.RightCurve.ToString(), false);
-                    anim.SetBool(animationState.LeftCurve.ToString(), true);
                 }
             }
             //右端
@@ -131,11 +130,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
-                    transform.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
-                    anim.SetBool(animationState.RightCurve.ToString(), false);
-                    anim.SetBool(animationState.LeftCurve.ToString(), true);
-
                 }
 
             }
@@ -152,9 +147,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
-                    transform.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
-                    anim.SetBool(animationState.LeftCurve.ToString(), false);
                 }
             }
             //中央
@@ -164,24 +157,55 @@ public class PlayerMove : MonoBehaviour
                 {
                     rean = Rean.Right;
                     rb.velocity = Vector3.forward * speed;
-                    transform.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
-                    anim.SetBool(animationState.LeftCurve.ToString(), false);
                 }
             }
             //右端
             else if (rean == Rean.Right)
             {
                 rb.velocity = Vector3.forward * speed;
-                transform.rotation = Quaternion.Euler(forward_rot);
                 command = VoiceToText.VoiceCommand.Null;
 
             }
         }
+
+        if (isCurve)
+        {
+            RotateToAngle(command);
+        }
     }
+
 
     //曲がり角で方向転換を発言した場合、通路の中心まで来てから方向転換するようにする（曲がった最初は中心レーンから）
     //T字路を実装した場合、曲がるタイミングでposを更新する必要がある
+
+
+    //現在のアングルから指定アングルまで徐々に回転させる
+    void RotateToAngle(VoiceToText.VoiceCommand direction)
+    {
+        bool foward = false;
+        Debug.Log("aaaaaaaaaaa");
+        if (direction== VoiceToText.VoiceCommand.ひだり&&foward)
+        {
+        tr.rotation = Quaternion.RotateTowards(tr.rotation, Quaternion.Euler(left_rot), RotateSpeed * Time.deltaTime);
+        if(tr.rotation== Quaternion.Euler(left_rot))
+            {
+                foward = true;
+            }
+        }
+        else if(foward==true)
+        {
+            tr.rotation = Quaternion.RotateTowards(tr.rotation, Quaternion.Euler(forward_rot), RotateSpeed * Time.deltaTime);
+        
+        if(tr.rotation== Quaternion.Euler(forward_rot))
+            {
+                isCurve = false;
+                foward = false;
+            }
+        }
+
+
+    }
 
 
     //移動、回転処理
@@ -198,21 +222,20 @@ public class PlayerMove : MonoBehaviour
             case nameof(VoiceToText.VoiceCommand.ひだり):
                 command = VoiceToText.VoiceCommand.ひだり;
                 rb.velocity = new Vector3(-1, 0, 1) * speed;
-                anim.SetBool(animationState.LeftCurve.ToString(),true);
-                    break;
+                tr.rotation = Quaternion.Euler(left_rot);
+                break;
 
             case nameof(VoiceToText.VoiceCommand.みぎ):
                 command = VoiceToText.VoiceCommand.みぎ;
                 rb.velocity = new Vector3(1, 0, 1) * speed;
-                transform.rotation = Quaternion.Euler(right_rot);
-                anim.SetBool(animationState.RightCurve.ToString(),true);
+                tr.rotation = Quaternion.Euler(right_rot);
                 break;
 
             case nameof(VoiceToText.VoiceCommand.なんでやねん):
                 //追加の処理がないため必要なし↓
                 //command = VoiceToText.VoiceCommand.なんでやねん;
                 rb.velocity = Vector3.forward * speed;
-                transform.rotation = Quaternion.Euler(forward_rot);
+                tr.rotation = Quaternion.Euler(forward_rot);
                 break;
 
             case nameof(VoiceToText.VoiceCommand.伏せ):
@@ -230,6 +253,8 @@ public class PlayerMove : MonoBehaviour
 
 
     }
+
+
 
     void JumpMove()
     {
