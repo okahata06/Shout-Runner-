@@ -13,11 +13,15 @@ public class PlayerHealth : MonoBehaviour
     int maxHP = 3;
     int currentHealth;
     BoxCollider boxCol;
+    Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHP;
         boxCol = GetComponent<BoxCollider>();
+        anim = GetComponent<Animator>();
+        anim.SetInteger("HP", maxHP);
     }
 
     // Update is called once per frame
@@ -29,15 +33,11 @@ public class PlayerHealth : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
 
-        //トラップの数だけループさせてチェック
-        for(int i = 0;i<Enum.GetValues(typeof(TrapType)).Length;i++)
-        {
-
-        }
         if(col.gameObject.CompareTag(TrapType.Box.ToString()) ||
             col.gameObject.CompareTag(TrapType.Trap.ToString()))
         {
             currentHealth--;
+            anim.SetInteger("HP", currentHealth);
             Debug.Log("Player HP: " + currentHealth);
             // 死亡処理
             if (currentHealth <= 0)
