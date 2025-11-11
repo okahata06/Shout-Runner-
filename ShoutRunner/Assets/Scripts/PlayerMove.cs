@@ -28,6 +28,8 @@ public class PlayerMove : MonoBehaviour
     Rean rean = Rean.Center;
     VoiceToText voiceToText;
     VoiceToText.VoiceCommand command;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +45,42 @@ public class PlayerMove : MonoBehaviour
         left_rot = new Vector3(forward_rot.x, forward_rot.y - 45, forward_rot.z);
         right_rot = new Vector3(forward_rot.x, forward_rot.y + 45, forward_rot.z);
 
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        //音声認識なしデバッグ用
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.なんでやねん.ToString();
+            MoveByText(command.ToString());
+            Debug.Log(command.ToString());
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ひだり.ToString();
+            MoveByText(command.ToString());
+        }
+        else if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.みぎ.ToString();
+            MoveByText(command.ToString());
+        }
+        else if(Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ジャンプ.ToString();
+            MoveByText(command.ToString());
+        }
+        else if(Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.伏せ.ToString();
+            MoveByText(command.ToString());
+        }
+
         // 音声認識で取得したテキストが変化してたら処理
         if (recognizedText != voiceToText.GetSetRecognizedText)
         {
@@ -250,6 +283,7 @@ public class PlayerMove : MonoBehaviour
         //移動処理をしていない状態=Null
         if (command != VoiceToText.VoiceCommand.Null)
             return;
+        Debug.Log(text);
 
         pos = tr.position;
         //方向転換など
