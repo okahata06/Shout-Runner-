@@ -1,17 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class StageTips : MonoBehaviour
 {
-    //ステージチップのサイズ
+    //ステージチップのZ軸のサイズ
     const int StageTipSize = 12;
     //
     private int currentTipIndex;
+    //
+    private int playerScore = 0;
+    [Header("スコアを1増加させるのに必要な距離")]
+    public float distancePerScore = 0.1f;
+    //
+    private float playerPos = 0;
+    private float lastPosition;
+    private float distanceAccumulated = 0f;
     [Header("ターゲットのキャラ")]
     public Transform character;
     [Header("ステージチップ格納用配列")]
     public GameObject[] stageTips;
+    [Header("一定距離進んだ時用ステージチップ格納用配列")]
+    public GameObject[] darkstageTips;
     [Header("最初のステージチップ生成位置")]
     public int startTipIndex;
     [Header("ステージ生成数")]
@@ -24,6 +35,8 @@ public class StageTips : MonoBehaviour
         //初期化処理
         currentTipIndex = startTipIndex - 1;
         UpdateStage(preInstantiate);
+
+        lastPosition = character.transform.position.z;
     }
 
 
@@ -37,6 +50,20 @@ public class StageTips : MonoBehaviour
             UpdateStage(charaPositionIndex + preInstantiate);
         }
 
+        playerPos = character.transform.position.z;
+        float move= Mathf.Abs(playerPos - lastPosition);
+        distanceAccumulated += move;
+
+        //累積距離が0.1を超えたらスコアを加算
+        while (distanceAccumulated >= distancePerScore)
+        {
+            playerScore += 1;
+            distanceAccumulated -= distancePerScore;
+            Debug.Log("Score: " + playerScore);
+        }
+
+        //現在位置を記録
+        lastPosition = playerPos;
     }
     //指定のインデックスまでのステージチップを生成して管理下におく
     void UpdateStage(int toTipIndex)
