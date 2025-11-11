@@ -24,7 +24,7 @@ public class PlayerMove : MonoBehaviour
     Vector3 left_rot;
     Vector3 right_rot;
     string recognizedText;
-    float RotateSpeed = 150f;
+    float RotateSpeed = 170f;
     Rean rean = Rean.Center;
     VoiceToText voiceToText;
     VoiceToText.VoiceCommand command;
@@ -122,7 +122,6 @@ public class PlayerMove : MonoBehaviour
                     rean = Rean.Left;
                     rb.velocity = Vector3.forward * speed;
                     tr.rotation = Quaternion.Euler(forward_rot);
-                    foward = false;
                     command = VoiceToText.VoiceCommand.Null;
                 }
             }
@@ -135,7 +134,6 @@ public class PlayerMove : MonoBehaviour
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
                     tr.rotation = Quaternion.Euler(forward_rot);
-                    foward = false;
                     command = VoiceToText.VoiceCommand.Null;
                 }
 
@@ -155,7 +153,6 @@ public class PlayerMove : MonoBehaviour
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
                     tr.rotation = Quaternion.Euler(forward_rot);
-                    foward = false;
                     command = VoiceToText.VoiceCommand.Null;
                 }
             }
@@ -168,7 +165,6 @@ public class PlayerMove : MonoBehaviour
                     rean = Rean.Right;
                     rb.velocity = Vector3.forward * speed;
                     tr.rotation = Quaternion.Euler(forward_rot);
-                    foward = false;
                     command = VoiceToText.VoiceCommand.Null;
                 }
             }
@@ -209,13 +205,15 @@ public class PlayerMove : MonoBehaviour
         else if(foward==true)
         {
             time+= Time.deltaTime;
-            if (time <= 0.5f)
+            if (time <= 0.6f)
                 return;
                 tr.rotation = Quaternion.RotateTowards(tr.rotation, Quaternion.Euler(forward_rot), RotateSpeed * Time.deltaTime);
         
         if(tr.rotation== Quaternion.Euler(forward_rot))
             {
                 isCurve = false;
+                foward = false;
+                time = 0;
             }
         }
         //‰E
@@ -231,13 +229,15 @@ public class PlayerMove : MonoBehaviour
         else if (foward == true)
         {
             time += Time.deltaTime;
-            if (time <= 0.5f)
+            if (time <= 0.6f)
                 return;
             tr.rotation = Quaternion.RotateTowards(tr.rotation, Quaternion.Euler(forward_rot), RotateSpeed * Time.deltaTime);
 
             if (tr.rotation == Quaternion.Euler(forward_rot))
             {
                 isCurve = false;
+                foward = false;
+                time = 0;
             }
         }
 
