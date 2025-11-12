@@ -29,7 +29,7 @@ public class PlayerMove : MonoBehaviour
     VoiceToText voiceToText;
     VoiceToText.VoiceCommand command;
 
-
+    public static bool ismove=true;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +52,12 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log("ismove:" + ismove);
+        if (!ismove)
+        {
+            rb.velocity = Vector3.zero;
+            return;
+        }
         //音声認識なしデバッグ用
         if (Input.GetKeyDown(KeyCode.Space))
         {
