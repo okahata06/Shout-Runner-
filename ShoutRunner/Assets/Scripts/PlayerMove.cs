@@ -52,7 +52,6 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("ismove:" + ismove);
         if (!ismove)
         {
             rb.velocity = Vector3.zero;
