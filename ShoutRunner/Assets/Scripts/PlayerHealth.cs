@@ -45,6 +45,7 @@ public class PlayerHealth : MonoBehaviour
                // Debug.Log("Player Dead");
                 boxCol.enabled = false; // —á: Õ“Ë”»’è‚ğ–³Œø‰»
                 PlayerMove.ismove = false;
+                anim.applyRootMotion= true;
             }
         }
     }

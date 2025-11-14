@@ -242,7 +242,7 @@ public class PlayerMove : MonoBehaviour
         else if(foward==true)
         {
             time+= Time.deltaTime;
-            if (time <= 0.6f)
+            if (time <= 1.5f/speed)
                 return;
                 tr.rotation = Quaternion.RotateTowards(tr.rotation, Quaternion.Euler(forward_rot), RotateSpeed * Time.deltaTime);
         
@@ -266,7 +266,7 @@ public class PlayerMove : MonoBehaviour
         else if (foward == true)
         {
             time += Time.deltaTime;
-            if (time <= 0.6f)
+            if (time <= 1.5f / speed)
                 return;
             tr.rotation = Quaternion.RotateTowards(tr.rotation, Quaternion.Euler(forward_rot), RotateSpeed * Time.deltaTime);
 
