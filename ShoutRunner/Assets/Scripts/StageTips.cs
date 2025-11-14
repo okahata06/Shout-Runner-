@@ -13,7 +13,8 @@ public class StageTips : MonoBehaviour
     private int playerScore = 0;
     [Header("スコアを1増加させるのに必要な距離")]
     public float distancePerScore = 0.1f;
-    //
+    [Header("生成するステージを変更するために必要なスコア")]
+    public int mustScore;
     private float playerPos = 0;
     private float lastPosition;
     private float distanceAccumulated = 0f;
@@ -86,16 +87,30 @@ public class StageTips : MonoBehaviour
     /// 指定のインデックス位置にstageオブジェクトをランダムに生成
     /// </summary>
     /// <param name="tipIndex"></param>
-    /// <returns name="stageObject"></returns>
     GameObject GenerateStage(int tipIndex)
     {
-        int nextStageTip = Random.Range(0, stageTips.Length);
+        if (playerScore <= mustScore - ((StageTipSize * preInstantiate) * 10))
+        {
+            int nextStageTip = Random.Range(0, stageTips.Length);
 
-        GameObject stageObject = Instantiate(
-            stageTips[nextStageTip],
-            new Vector3(0, 0, tipIndex * StageTipSize),
-            Quaternion.identity);
-        return stageObject;
+            GameObject stageObject = Instantiate(
+                stageTips[nextStageTip],
+                new Vector3(0, 0, tipIndex * StageTipSize),
+                Quaternion.identity);
+
+            return stageObject;
+        }
+        else
+        {
+            int nextStageTip = Random.Range(0, darkstageTips.Length);
+
+            GameObject stageObject = Instantiate(
+                darkstageTips[nextStageTip],
+                new Vector3(0, 0, tipIndex * StageTipSize),
+                Quaternion.identity);
+
+            return stageObject;
+        }
     }
     /// <summary>
     /// 一番古いステージを削除
