@@ -211,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba506c4b38b7a124eabce4a4645a0660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distancePerScore: 0.1
   character: {fileID: 1765207555}
   stageTips:
   - {fileID: 1989576033079712494, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
@@ -220,6 +221,8 @@ MonoBehaviour:
   - {fileID: 6581659958612775127, guid: 69d8addfb33ad7646ae73d5142a9ab2a, type: 3}
   - {fileID: 7895774895758077143, guid: aec96eeebe2bf6f48b49dcbff2762d10, type: 3}
   - {fileID: 8719475646558348455, guid: 59e31940d6ad5104cb8d78d14b67d424, type: 3}
+  darkstageTips:
+  - {fileID: 6473495054694111069, guid: 58bf6a47596f13f42b52ddd4f930f1aa, type: 3}
   startTipIndex: 1
   preInstantiate: 3
   generatedStageList: []
