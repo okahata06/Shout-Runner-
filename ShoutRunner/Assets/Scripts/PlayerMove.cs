@@ -57,6 +57,9 @@ public class PlayerMove : MonoBehaviour
             rb.velocity = Vector3.zero;
             return;
         }
+        //速度による回転速度の調整
+        RotateSpeed = speed * 40f;
+
         //音声認識なしデバッグ用
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -116,7 +119,6 @@ public class PlayerMove : MonoBehaviour
         if (recognizedText == VoiceToText.VoiceCommand.ジャンプ.ToString() && !isJump)
         {
             isJump = true;
-            // Debug.Log("isJump=true");
 
             rb.velocity += jump_vec;
         }
@@ -160,6 +162,8 @@ public class PlayerMove : MonoBehaviour
                     rb.velocity = Vector3.forward * speed;
                     tr.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
+                    foward = false;
+                    time = 0;
                 }
             }
             //右端
@@ -172,6 +176,8 @@ public class PlayerMove : MonoBehaviour
                     rb.velocity = Vector3.forward * speed;
                     tr.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
+                    foward = false;
+                    time = 0;
                 }
 
             }
@@ -191,6 +197,8 @@ public class PlayerMove : MonoBehaviour
                     rb.velocity = Vector3.forward * speed;
                     tr.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
+                    foward = false;
+                    time = 0;
                 }
             }
             //中央
@@ -203,6 +211,8 @@ public class PlayerMove : MonoBehaviour
                     rb.velocity = Vector3.forward * speed;
                     tr.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
+                    foward = false;
+                    time = 0;
                 }
             }
             //右端
@@ -228,7 +238,7 @@ public class PlayerMove : MonoBehaviour
     //現在のアングルから指定アングルまで徐々に回転させる
     void RotateToAngle(VoiceToText.VoiceCommand direction)
     {
-        
+        Debug.Log(time);
         //左
         if (direction== VoiceToText.VoiceCommand.ひだり&&!foward)
         {
@@ -242,15 +252,13 @@ public class PlayerMove : MonoBehaviour
         else if(foward==true)
         {
             time+= Time.deltaTime;
-            if (time <= 1.5f/speed)
+            if (time <= 2.0f/(speed*1.5f))
                 return;
                 tr.rotation = Quaternion.RotateTowards(tr.rotation, Quaternion.Euler(forward_rot), RotateSpeed * Time.deltaTime);
         
         if(tr.rotation== Quaternion.Euler(forward_rot))
             {
                 isCurve = false;
-                foward = false;
-                time = 0;
             }
         }
         //右
@@ -273,8 +281,6 @@ public class PlayerMove : MonoBehaviour
             if (tr.rotation == Quaternion.Euler(forward_rot))
             {
                 isCurve = false;
-                foward = false;
-                time = 0;
             }
         }
 
