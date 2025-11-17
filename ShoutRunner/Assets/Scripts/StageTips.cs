@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class StageTips : MonoBehaviour
 {
@@ -15,8 +15,11 @@ public class StageTips : MonoBehaviour
     public float distancePerScore = 0.1f;
     [Header("生成するステージを変更するために必要なスコア")]
     public int mustScore;
+    //
     private float playerPos = 0;
+    //
     private float lastPosition;
+    //
     private float distanceAccumulated = 0f;
     [Header("ターゲットのキャラ")]
     public Transform character;
@@ -30,6 +33,8 @@ public class StageTips : MonoBehaviour
     public int preInstantiate;
     [Header("生成されたステージリスト")]
     public List<GameObject> generatedStageList = new List<GameObject>();
+    [Header("スコアのテキスト")]
+    public Text ScoreText;
 
     void Start()
     {
@@ -60,11 +65,13 @@ public class StageTips : MonoBehaviour
         {
             playerScore += 1;
             distanceAccumulated -= distancePerScore;
-            Debug.Log("Score: " + playerScore);
         }
 
         //現在位置を記録
         lastPosition = playerPos;
+
+        //スコアテキスト修正
+        ScoreText.text = "SCORE:" + playerScore;
     }
     //指定のインデックスまでのステージチップを生成して管理下におく
     void UpdateStage(int toTipIndex)
@@ -89,6 +96,7 @@ public class StageTips : MonoBehaviour
     /// <param name="tipIndex"></param>
     GameObject GenerateStage(int tipIndex)
     {
+        //
         if (playerScore <= mustScore - ((StageTipSize * preInstantiate) * 10))
         {
             int nextStageTip = Random.Range(0, stageTips.Length);
