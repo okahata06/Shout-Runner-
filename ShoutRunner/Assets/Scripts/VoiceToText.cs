@@ -21,6 +21,7 @@ public class VoiceToText : MonoBehaviour
     {
         dictationRecognizer=new DictationRecognizer();
         dictationRecognizer.DictationResult += DictationRecResult;
+        dictationRecognizer.DictationError += DictationRecError;
         // キーワード認識の初期化
         keywordRecognizer = new KeywordRecognizer(keywords);
         //イベントに登録
@@ -74,7 +75,11 @@ public class VoiceToText : MonoBehaviour
         get { return recognizedText; }
         set { recognizedText = value; }
     }
-
+    //何かしらのエラーが起きた時に発生するイベント
+    private void DictationRecError(string error, int hresult)
+    {
+        Debug.Log($"エラー：{error}, {hresult}");
+    }
     void OnDestroy()
     {
         // クリーンアップ
