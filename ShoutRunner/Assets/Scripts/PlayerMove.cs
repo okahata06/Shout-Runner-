@@ -239,7 +239,6 @@ public class PlayerMove : MonoBehaviour
     //現在のアングルから指定アングルまで徐々に回転させる
     void RotateToAngle(VoiceToText.VoiceCommand direction)
     {
-        Debug.Log(time);
         //左
         if (direction== VoiceToText.VoiceCommand.ひだり&&!foward)
         {
@@ -294,7 +293,6 @@ public class PlayerMove : MonoBehaviour
         //移動処理をしていない状態=Null
         if (command != VoiceToText.VoiceCommand.Null)
             return;
-        Debug.Log(text);
 
         pos = tr.position;
         //方向転換など

@@ -8,6 +8,7 @@ public class VoiceToText : MonoBehaviour
 {
 
     KeywordRecognizer keywordRecognizer;
+    DictationRecognizer dictationRecognizer;
 
     string recognizedText = "";
 
@@ -18,27 +19,34 @@ public class VoiceToText : MonoBehaviour
     };
     void Start()
     {
+        dictationRecognizer=new DictationRecognizer();
+        dictationRecognizer.DictationResult += DictationRecResult;
         // キーワード認識の初期化
         keywordRecognizer = new KeywordRecognizer(keywords);
         //イベントに登録
         keywordRecognizer.OnPhraseRecognized += OnPhraseRecognized;
-        keywordRecognizer.Start();
+       // keywordRecognizer.Start();
 
-        Debug.Log("音声認識開始");
+        Debug.Log("keyword音声認識開始");
+        dictationRecognizer.Start();
+        Debug.Log("dictation音声認識開始");
     }
 
+    void Update()
+    {
+
+    }
     //音声入力があったと判定されたときに呼ばれる　　　　　　　認識された音声データ
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
-        Debug.Log($"認識された言葉: {args.text}");
-        Debug.Log($"信頼度: {args.confidence}");
+       // Debug.Log($"認識された言葉: {args.text}");
+       // Debug.Log($"信頼度: {args.confidence}");
 
         recognizedText = args.text;
 
-
         // 認識された言葉に応じて処理
         //動きはPlayerMove.csで実装
-        switch (args.text)
+        /*switch (args.text)
         {
             case nameof(VoiceCommand.ジャンプ) or nameof(VoiceCommand.とべ):
                 Debug.Log("ジャンプ");
@@ -55,9 +63,12 @@ public class VoiceToText : MonoBehaviour
             case nameof(VoiceCommand.伏せ):
                 Debug.Log("伏せ");
                 break;
-        }
+        }*/
     }
-
+    private void DictationRecResult(string text, ConfidenceLevel confidence)
+    {
+        Debug.Log($"認識した音声： {text}");
+    }
     public string GetSetRecognizedText
     {
         get { return recognizedText; }
@@ -72,6 +83,9 @@ public class VoiceToText : MonoBehaviour
             keywordRecognizer.Stop();
         }
         keywordRecognizer?.Dispose();
+
+        dictationRecognizer.Stop();
+        dictationRecognizer.Dispose();
     }
 
     public enum VoiceCommand
