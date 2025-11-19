@@ -8,7 +8,7 @@ public class VoiceToText : MonoBehaviour
 {
 
     KeywordRecognizer keywordRecognizer;
-    DictationRecognizer dictationRecognizer;
+    //DictationRecognizer dictationRecognizer;
 
     string recognizedText = "";
 
@@ -19,19 +19,20 @@ public class VoiceToText : MonoBehaviour
     };
     void Start()
     {
-        dictationRecognizer=new DictationRecognizer();
-        dictationRecognizer.DictationResult += DictationRecResult;
-        dictationRecognizer.DictationError += DictationRecError;
-     dictationRecognizer.DictationComplete += DictationRecComplete;
+        //dictationRecognizer=new DictationRecognizer();
+        //dictationRecognizer.DictationResult += DictationRecResult;
+       // dictationRecognizer.DictationError += DictationRecError;
+     //dictationRecognizer.DictationComplete += DictationRecComplete;
         // キーワード認識の初期化
         keywordRecognizer = new KeywordRecognizer(keywords);
         //イベントに登録
         keywordRecognizer.OnPhraseRecognized += OnPhraseRecognized;
-       // keywordRecognizer.Start();
+        keywordRecognizer.Start();
 
         Debug.Log("keyword音声認識開始");
-        dictationRecognizer.Start();
-        Debug.Log("dictation音声認識開始");
+      
+        //dictationRecognizer.Start();
+        //Debug.Log("dictation音声認識開始");
    
    
     }
@@ -50,7 +51,7 @@ public class VoiceToText : MonoBehaviour
 
         // 認識された言葉に応じて処理
         //動きはPlayerMove.csで実装
-        /*switch (args.text)
+        switch (args.text)
         {
             case nameof(VoiceCommand.ジャンプ) or nameof(VoiceCommand.とべ):
                 Debug.Log("ジャンプ");
@@ -67,12 +68,9 @@ public class VoiceToText : MonoBehaviour
             case nameof(VoiceCommand.伏せ):
                 Debug.Log("伏せ");
                 break;
-        }*/
+        }
     }
-    private void DictationRecResult(string text, ConfidenceLevel confidence)
-    {
-        Debug.Log($"認識した音声： {text}");
-    }
+    
 
 
     public string GetSetRecognizedText
@@ -81,19 +79,6 @@ public class VoiceToText : MonoBehaviour
         set { recognizedText = value; }
     }
 
-    void DictationRecComplete(DictationCompletionCause cause)
-    {
-        Debug.Log("音声認識完了"+cause);
-        dictationRecognizer.Start();
-        Debug.Log("dictation音声認識開始");
-
-
-    }
-    //何かしらのエラーが起きた時に発生するイベント
-    private void DictationRecError(string error, int hresult)
-    {
-        Debug.Log($"エラー：{error}, {hresult}");
-    }
     void OnDestroy()
     {
         // クリーンアップ
@@ -103,8 +88,6 @@ public class VoiceToText : MonoBehaviour
         }
         keywordRecognizer?.Dispose();
 
-        dictationRecognizer.Stop();
-        dictationRecognizer.Dispose();
     }
 
     public enum VoiceCommand
