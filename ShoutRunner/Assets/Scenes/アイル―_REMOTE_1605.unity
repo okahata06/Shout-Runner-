@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 97719009}
   - component: {fileID: 97719011}
   - component: {fileID: 97719010}
-  - component: {fileID: 97719012}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -147,12 +146,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 97719008}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.27, y: 1.58, z: -4.18}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.45, z: -2.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1558643534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &97719010
 AudioListener:
@@ -213,20 +212,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &97719012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 97719008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f17b9cb84c55a24fae60ae37eac4247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 97719011}
-  player: {fileID: 1558643532}
 --- !u!1 &202530540
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,15 +316,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1196002064613143549, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.25442767
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1196002064613143549, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1196002064613143549, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.4338946
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1196002064613143549, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -420,15 +405,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba506c4b38b7a124eabce4a4645a0660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distancePerScore: 0.1
+  mustScore: 1000
   character: {fileID: 1558643534}
   stageTips:
   - {fileID: 1989576033079712494, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
   - {fileID: 6402126645148500609, guid: b5361218b1f6d7b48822a8c23be63a70, type: 3}
   - {fileID: 8678964221719542589, guid: 5eec7346fa84ed746ba5c642158f11c4, type: 3}
-  - {fileID: 3394091108654605345, guid: 2c733f95fcd58234db53740c5ff47e19, type: 3}
   - {fileID: 6581659958612775127, guid: 69d8addfb33ad7646ae73d5142a9ab2a, type: 3}
   - {fileID: 7895774895758077143, guid: aec96eeebe2bf6f48b49dcbff2762d10, type: 3}
   - {fileID: 8719475646558348455, guid: 59e31940d6ad5104cb8d78d14b67d424, type: 3}
+  darkstageTips:
+  - {fileID: 6473495054694111069, guid: 58bf6a47596f13f42b52ddd4f930f1aa, type: 3}
   startTipIndex: 1
   preInstantiate: 3
   generatedStageList: []
@@ -465,7 +453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 90db3c898e7676c43aa37e502974c50a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.64
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 90db3c898e7676c43aa37e502974c50a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -509,7 +497,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 90db3c898e7676c43aa37e502974c50a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 97719009}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90db3c898e7676c43aa37e502974c50a, type: 3}
       insertIndex: -1
@@ -648,12 +639,3 @@ SceneRoots:
   - {fileID: 485861018}
   - {fileID: 1468484929}
   - {fileID: 1272879755}
-<<<<<<< HEAD
-<<<<<<< HEAD
-  - {fileID: 1520997252}
-  - {fileID: 1773156193}
-=======
-  - {fileID: 97719009}
->>>>>>> origin/Okahata
-=======
->>>>>>> parent of fa763b0 (no message)
