@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour
     bool foward = false;
 
     float time = 0;
-    float crawlTime = 1.5f;
+    float crawlTime = 2.5f;
     Vector3 pos;
     Vector3 forward_rot;
     Vector3 left_rot;
@@ -110,6 +110,7 @@ public class PlayerMove : MonoBehaviour
                 anim.SetBool(animationState.Crawl.ToString(), false);
                 time = 0;
                 command = VoiceToText.VoiceCommand.Null;
+                rb.velocity = Vector3.forward * speed;
             }
 
         }
