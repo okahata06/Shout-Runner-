@@ -1,11 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Windows.Speech;
 
 //音声認識によって入力単語をテキスト化するスクリプト
 public class VoiceToText : MonoBehaviour
 {
+    [SerializeField,Header("音声認識結果表示用テキスト")]
+    Text text;
+    [SerializeField, Header("キャラ反応表示用テキスト")]
+    Text characterReactionText;
+
+    string[] reaction_Success= new string[]{
+        "オーケー！","了解です！","かしこまり！","その通りです！","承知しました！"
+    };
+    string[] reaction_Failure = new string[]{
+        "えっ？","もう一度言って！","聞き取られへんて！","なんて？","もう一回お願い！"
+    };
 
     KeywordRecognizer keywordRecognizer;
     //DictationRecognizer dictationRecognizer;
@@ -19,6 +31,7 @@ public class VoiceToText : MonoBehaviour
     };
     void Start()
     {
+        text.text = "音声認識待機中";
         //dictationRecognizer=new DictationRecognizer();
         //dictationRecognizer.DictationResult += DictationRecResult;
        // dictationRecognizer.DictationError += DictationRecError;
@@ -47,7 +60,7 @@ public class VoiceToText : MonoBehaviour
        // Debug.Log($"認識された言葉: {args.text}");
        // Debug.Log($"信頼度: {args.confidence}");
 
-        recognizedText = args.text;
+        recognizedText = text.text = args.text;
 
         // 認識された言葉に応じて処理
         //動きはPlayerMove.csで実装
