@@ -9,6 +9,16 @@ public class VoiceToText : MonoBehaviour
 {
     [SerializeField,Header("音声認識結果表示用テキスト")]
     Text text;
+    [SerializeField, Header("キャラ反応表示用テキスト")]
+    Text characterReactionText;
+
+    string[] reaction_Success= new string[]{
+        "オーケー！","了解です！","かしこまり！","その通りです！","承知しました！"
+    };
+    string[] reaction_Failure = new string[]{
+        "えっ？","もう一度言って！","聞き取られへんて！","なんて？","もう一回お願い！"
+    };
+
     KeywordRecognizer keywordRecognizer;
     //DictationRecognizer dictationRecognizer;
 
