@@ -2,13 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //OBJÇ…ìñÇΩÇ¡ÇΩéûÇÃëÃóÕä«óù
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField, Header("HP_Image")]
-    Sprite image;
+    [SerializeField, Header("HP1_Image")]
+    Image Hp1;
+    [SerializeField, Header("HP2_Image")]
+    Image Hp2;
+    [SerializeField, Header("HP3_Image")]
+    Image Hp3;
+    [SerializeField, Header("HPRest_Image")]
+    Sprite HpRest;
+    [SerializeField, Header("HPEmpty_Image")]
+    Sprite HpEmpty;
     [SerializeField, Header("HP_Max")]
     int maxHP = 3;
     int currentHealth;
@@ -27,7 +36,26 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentHealth == 3)
+        {
+            Hp1.sprite = HpRest;
+            Hp2.sprite = HpRest;
+            Hp3.sprite = HpRest;
+        }
+
+        else if(currentHealth == 2)
+        {
+            Hp1.sprite = HpRest;
+            Hp2.sprite = HpRest;
+            Hp3.sprite = HpEmpty;
+        }
+
+        else if (currentHealth == 1)
+        {
+            Hp1.sprite = HpRest;
+            Hp2.sprite = HpEmpty;
+            Hp3.sprite = HpEmpty;
+        }
     }
     
     private void OnTriggerEnter(Collider col)

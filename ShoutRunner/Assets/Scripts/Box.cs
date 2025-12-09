@@ -21,8 +21,8 @@ public class Box : MonoBehaviour
         //VoiceSettingスクリプトがついたオブジェクトを取得
         voice_setting = FindFirstObjectByType<VoiceSetting>();
 
-        Target = Camera.main.gameObject.transform;
-        //Target = GameObject.FindGameObjectWithTag("Player").transform;
+        //Target = Camera.main.gameObject.transform;
+        Target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
