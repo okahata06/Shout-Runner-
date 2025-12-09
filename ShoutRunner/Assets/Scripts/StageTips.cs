@@ -10,7 +10,7 @@ public class StageTips : MonoBehaviour
     //
     private int currentTipIndex;
     //
-    private int playerScore = 0;
+    public static int playerScore = 0;
     [Header("スコアを1増加させるのに必要な距離")]
     public float distancePerScore = 0.1f;
     [Header("生成するステージを変更するために必要なスコア")]
@@ -36,11 +36,16 @@ public class StageTips : MonoBehaviour
     [Header("スコアのテキスト")]
     public Text ScoreText;
 
+    private VoiceSetting voice_setting;//VoiceSettingスクリプト取得用
+
     void Start()
     {
         //初期化処理
         currentTipIndex = startTipIndex - 1;
         UpdateStage(preInstantiate);
+
+        //VoiceSettingスクリプトがついたオブジェクトを取得
+        voice_setting = FindFirstObjectByType<VoiceSetting>();
 
         lastPosition = character.transform.position.z;
     }
