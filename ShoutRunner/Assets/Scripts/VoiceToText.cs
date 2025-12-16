@@ -12,11 +12,16 @@ public class VoiceToText : MonoBehaviour
     [SerializeField, Header("キャラ反応表示用テキスト")]
     Text characterReactionText;
 
+    float TimeCount = 2f;
+    float noSpeakTime = 2f;
+
+
     string[] reaction_Success= new string[]{
         "オーケー！","了解です！","かしこまり！","その通りです！","承知しました！"
     };
+    //失敗時の取得はこの方法ではとれないため、一定時間認識がないときに表示する
     string[] reaction_Failure = new string[]{
-        "えっ？","もう一度言って！","聞き取られへんて！","なんて？","もう一回お願い！"
+        "えっ？","もっかい言って！","聞き取られへんて！","なんて？","もう一回お願い！"
     };
 
     KeywordRecognizer keywordRecognizer;
@@ -52,7 +57,15 @@ public class VoiceToText : MonoBehaviour
 
     void Update()
     {
-
+        TimeCount += Time.deltaTime;
+        if(TimeCount >= noSpeakTime)
+        {
+            //一定時間認識がないときに失敗リアクションを表示
+            int index = Random.Range(0, reaction_Failure.Length);
+            characterReactionText.text = reaction_Failure[index];
+            //Debug.Log("認識失敗リアクション表示");
+            TimeCount = 0f;
+        }
     }
     //音声入力があったと判定されたときに呼ばれる　　　　　　　認識された音声データ
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
@@ -61,6 +74,11 @@ public class VoiceToText : MonoBehaviour
        // Debug.Log($"信頼度: {args.confidence}");
 
         recognizedText = text.text = args.text;
+
+        int index = Random.Range(0, reaction_Success.Length);
+        characterReactionText.text = reaction_Success[index];
+        
+        TimeCount = 0f; //認識されたのでタイムカウントリセット
 
         // 認識された言葉に応じて処理
         //動きはPlayerMove.csで実装

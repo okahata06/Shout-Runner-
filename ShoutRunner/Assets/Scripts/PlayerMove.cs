@@ -11,7 +11,7 @@ public class PlayerMove : MonoBehaviour
     float speed = 3f;
     [SerializeField, Header("’µ–ô—Í")]
     Vector3 jump_vec = new Vector3(0, 10, 0);
-    float speedDecay = 2f;
+    float speedDecay = 6f;
     bool isJump = false;
     bool isCurve = false;
 
