@@ -9,7 +9,8 @@ public class VoiceToText : MonoBehaviour
 {
     [SerializeField,Header("音声認識結果表示用テキスト")]
     Text text;
-    [SerializeField, Header("キャラ反応表示用テキスト")]
+    [SerializeField, Header("キャラ反応表示用OBJ")]
+    Text characterReactionOBJ;
     Text characterReactionText;
 
     float TimeCount = 2f;
@@ -17,7 +18,7 @@ public class VoiceToText : MonoBehaviour
 
 
     string[] reaction_Success= new string[]{
-        "オーケー！","了解です！","かしこまり！","その通りです！","承知しました！"
+        "オーケー！","了解です！","かしこまり！","その通りです！","了解！"
     };
     //失敗時の取得はこの方法ではとれないため、一定時間認識がないときに表示する
     string[] reaction_Failure = new string[]{
