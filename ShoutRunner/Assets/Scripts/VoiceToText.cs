@@ -10,7 +10,7 @@ public class VoiceToText : MonoBehaviour
     [SerializeField,Header("音声認識結果表示用テキスト")]
     Text text;
     [SerializeField, Header("キャラ反応表示用OBJ")]
-    Text characterReactionOBJ;
+    GameObject characterReactionOBJ;
     Text characterReactionText;
 
     float TimeCount = 2f;
