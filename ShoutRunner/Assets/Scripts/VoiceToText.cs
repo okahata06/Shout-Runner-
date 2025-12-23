@@ -13,6 +13,8 @@ public class VoiceToText : MonoBehaviour
     GameObject characterReactionOBJ;
     Text characterReactionText;
 
+    CharacterVoiceSettiing characterVoiceSettiing;
+
     float TimeCount = 2f;
     float noSpeakTime = 2f;
 
@@ -24,7 +26,7 @@ public class VoiceToText : MonoBehaviour
     //失敗時の取得はこの方法ではとれないため、一定時間認識がないときに表示する
     string[] reaction_Failure = new string[]{
         ReactionFailure.え.ToString()+"？",ReactionFailure.なんて.ToString()+"？",ReactionFailure.もっかい言って.ToString()+"!",
-        ReactionFailure.聞き取られへんて.ToString()+"！",ReactionFailure.もう一度お願い.ToString()+"！"
+        ReactionFailure.聞き取られへんて.ToString()+"！",ReactionFailure.ちゃんと喋れ.ToString()+"！"
     };
 
     KeywordRecognizer keywordRecognizer;
@@ -39,6 +41,8 @@ public class VoiceToText : MonoBehaviour
     };
     void Start()
     {
+        characterVoiceSettiing= GetComponent<CharacterVoiceSettiing>();
+
         characterReactionText = characterReactionOBJ.GetComponentInChildren<Text>();
         text.text = "音声認識待機中";
         //dictationRecognizer=new DictationRecognizer();
@@ -65,8 +69,8 @@ public class VoiceToText : MonoBehaviour
         if(TimeCount >= noSpeakTime)
         {
             //一定時間認識がないときに失敗リアクションを表示
-            int index = Random.Range(0, reaction_Failure.Length);
-            characterReactionText.text = reaction_Failure[index];
+SuccessOrFilure(false);
+
             //Debug.Log("認識失敗リアクション表示");
             TimeCount = 0f;
         }
@@ -79,9 +83,7 @@ public class VoiceToText : MonoBehaviour
 
         recognizedText = text.text = args.text;
 
-        int index = Random.Range(0, reaction_Success.Length);
-        characterReactionText.text = reaction_Success[index];
-        
+SuccessOrFilure(true); //認識成功リアクション表示        
         TimeCount = 0f; //認識されたのでタイムカウントリセット
 
         // 認識された言葉に応じて処理
@@ -105,7 +107,22 @@ public class VoiceToText : MonoBehaviour
                 break;
         }
     }
-    
+    void SuccessOrFilure(bool isSuccess)
+    {
+        if(isSuccess)
+        {
+            int index = Random.Range(0, reaction_Success.Length);
+            characterReactionText.text = reaction_Success[index];
+            Debug.Log("認識成功リアクション表示");
+            characterVoiceSettiing.SetVoiceNumber = 0;
+        }
+        else
+        {
+            int index = Random.Range(0, reaction_Failure.Length);
+            characterReactionText.text = reaction_Failure[index];
+            Debug.Log("認識失敗リアクション表示");
+        }
+    }
 
 
     public string GetSetRecognizedText
@@ -135,6 +152,7 @@ public class VoiceToText : MonoBehaviour
         伏せ,
         Null,
     }
+
     public enum ReactionSuccess
     {
         オーケー,
@@ -148,7 +166,7 @@ public class VoiceToText : MonoBehaviour
         なんて,
         もっかい言って,
         聞き取られへんて,
-        もう一度お願い,
+        ちゃんと喋れ,
     }
 
 
