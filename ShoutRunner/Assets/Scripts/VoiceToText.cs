@@ -18,11 +18,13 @@ public class VoiceToText : MonoBehaviour
 
 
     string[] reaction_Success= new string[]{
-        "オーケー！","了解です！","かしこまり！","その通りです！","了解！"
+        ReactionSuccess.オーケー.ToString()+"！",ReactionSuccess.かしこまり.ToString()+"！",ReactionSuccess.了解.ToString()+"！",
+        ReactionSuccess.了解です.ToString()+"！"
     };
     //失敗時の取得はこの方法ではとれないため、一定時間認識がないときに表示する
     string[] reaction_Failure = new string[]{
-        "えっ？","もっかい言って！","聞き取られへんて！","なんて？","もう一回お願い！"
+        ReactionFailure.え.ToString()+"？",ReactionFailure.なんて.ToString()+"？",ReactionFailure.もっかい言って.ToString()+"!",
+        ReactionFailure.聞き取られへんて.ToString()+"！",ReactionFailure.もう一度お願い.ToString()+"！"
     };
 
     KeywordRecognizer keywordRecognizer;
@@ -37,6 +39,7 @@ public class VoiceToText : MonoBehaviour
     };
     void Start()
     {
+        characterReactionText = characterReactionOBJ.GetComponentInChildren<Text>();
         text.text = "音声認識待機中";
         //dictationRecognizer=new DictationRecognizer();
         //dictationRecognizer.DictationResult += DictationRecResult;
@@ -131,6 +134,21 @@ public class VoiceToText : MonoBehaviour
         みぎ,
         伏せ,
         Null,
+    }
+    public enum ReactionSuccess
+    {
+        オーケー,
+        了解です,
+        かしこまり,
+        了解,
+    }
+    public enum ReactionFailure
+    {
+        え,
+        なんて,
+        もっかい言って,
+        聞き取られへんて,
+        もう一度お願い,
     }
 
 
