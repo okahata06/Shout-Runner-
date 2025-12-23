@@ -20,7 +20,10 @@ public class CharacterVoiceSettiing : MonoBehaviour
         voiceSource=GetComponent<AudioSource>();
         voiceToText=GetComponent<VoiceToText>();
 
-            voiceNumber=-1;
+        voiceSource.clip = voiceClip[9];
+        voiceSource.Play();
+
+        voiceNumber = -1;
     }
 
     // Update is called once per frame
@@ -31,7 +34,6 @@ public class CharacterVoiceSettiing : MonoBehaviour
             voiceSource.clip=voiceClip[voiceNumber];
             voiceSource.Play();
             voiceNumber=-1;
-            Debug.Log(voiceClip[0]);
         }
     }
 
