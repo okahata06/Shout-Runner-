@@ -13,15 +13,16 @@ public class VoiceToText : MonoBehaviour
     GameObject characterReactionOBJ;
     Text characterReactionText;
 
+    VoiceSetting voiceSetting;
     CharacterVoiceSettiing characterVoiceSettiing;
 
     float TimeCount = 2f;
-    float noSpeakTime = 2f;
+    float noSpeakTime = 1f;
 
 
     string[] reaction_Success= new string[]{
         ReactionSuccess.オーケー.ToString()+"！",ReactionSuccess.かしこまり.ToString()+"！",ReactionSuccess.了解.ToString()+"！",
-        ReactionSuccess.了解です.ToString()+"！"
+        
     };
     //失敗時の取得はこの方法ではとれないため、一定時間認識がないときに表示する
     string[] reaction_Failure = new string[]{
@@ -41,7 +42,8 @@ public class VoiceToText : MonoBehaviour
     };
     void Start()
     {
-        characterVoiceSettiing= GetComponent<CharacterVoiceSettiing>();
+        voiceSetting = GetComponent<VoiceSetting>();
+        characterVoiceSettiing = GetComponent<CharacterVoiceSettiing>();
 
         characterReactionText = characterReactionOBJ.GetComponentInChildren<Text>();
         text.text = "音声認識待機中";
@@ -65,8 +67,10 @@ public class VoiceToText : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("音声入力音量:"+ voiceSetting.GetVoiceVolume);
         TimeCount += Time.deltaTime;
-        if(TimeCount >= noSpeakTime)
+        //if(TimeCount >= noSpeakTime)
+        if(voiceSetting.GetVoiceVolume > 0.3f && TimeCount >= noSpeakTime)
         {
             //一定時間認識がないときに失敗リアクションを表示
 SuccessOrFilure(false);
@@ -114,13 +118,14 @@ SuccessOrFilure(true); //認識成功リアクション表示
             int index = Random.Range(0, reaction_Success.Length);
             characterReactionText.text = reaction_Success[index];
             Debug.Log("認識成功リアクション表示");
-            characterVoiceSettiing.SetVoiceNumber = 0;
+            characterVoiceSettiing.SetVoiceNumber = index;
         }
         else
         {
             int index = Random.Range(0, reaction_Failure.Length);
             characterReactionText.text = reaction_Failure[index];
             Debug.Log("認識失敗リアクション表示");
+            characterVoiceSettiing.SetVoiceNumber = index+4;
         }
     }
 
