@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    BoxCollider boxCol;
     Rigidbody rb;
     Transform tr;
     Animator anim;
@@ -23,6 +24,8 @@ public class PlayerMove : MonoBehaviour
     Vector3 forward_rot;
     Vector3 left_rot;
     Vector3 right_rot;
+    Vector3 colliderSize;
+    Vector3 colliderPos;
     string recognizedText;
     float RotateSpeed = 170f;
     Rean rean = Rean.Center;
@@ -33,13 +36,16 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        boxCol=GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
         anim = GetComponent<Animator>();
         voiceToText = GetComponent<VoiceToText>();
         recognizedText = voiceToText.GetSetRecognizedText;
         command = VoiceToText.VoiceCommand.Null;
-
+        
+        colliderSize = boxCol.size;
+        colliderPos = boxCol.center;
         pos = tr.position;
         forward_rot = tr.eulerAngles;
         left_rot = new Vector3(forward_rot.x, forward_rot.y - 45, forward_rot.z);
@@ -111,6 +117,8 @@ public class PlayerMove : MonoBehaviour
                 time = 0;
                 command = VoiceToText.VoiceCommand.Null;
                 rb.velocity = Vector3.forward * speed;
+                boxCol.size=colliderSize;
+                boxCol.center=colliderPos;
             }
 
         }
@@ -317,6 +325,8 @@ public class PlayerMove : MonoBehaviour
             case nameof(VoiceToText.VoiceCommand.•š‚¹):
                 command = VoiceToText.VoiceCommand.•š‚¹;
                 rb.velocity = Vector3.forward * speed * 0.5f;
+                boxCol.size = new Vector3(colliderSize.x, colliderSize.y / 3, colliderSize.z);
+                boxCol.center = new Vector3(colliderPos.x, 0, colliderPos.z);
                 anim.SetBool(animationState.Crawl.ToString(), true);
                 break;
 
