@@ -11,14 +11,12 @@ public class CharacterVoiceSettiing : MonoBehaviour
     AudioClip[] voiceClip=new AudioClip[10];
 
     int voiceNumber;
-    VoiceToText voiceToText;
 
 
     // Start is called before the first frame update
     void Start()
     {
         voiceSource=GetComponent<AudioSource>();
-        voiceToText=GetComponent<VoiceToText>();
 
         voiceSource.clip = voiceClip[9];
         voiceSource.Play();

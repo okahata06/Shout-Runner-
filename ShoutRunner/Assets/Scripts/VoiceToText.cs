@@ -7,7 +7,7 @@ using UnityEngine.Windows.Speech;
 //音声認識によって入力単語をテキスト化するスクリプト
 public class VoiceToText : MonoBehaviour
 {
-    [SerializeField,Header("音声認識結果表示用テキスト")]
+    [SerializeField, Header("音声認識結果表示用テキスト")]
     Text text;
     [SerializeField, Header("キャラ反応表示用OBJ")]
     GameObject characterReactionOBJ;
@@ -16,15 +16,17 @@ public class VoiceToText : MonoBehaviour
     VoiceSetting voiceSetting;
     CharacterVoiceSettiing characterVoiceSettiing;
 
+    float TextDisplayTime = 1.3f;
+    float textdisplayTimeCount = 0f;
     float TimeCount = 2f;
     float noSpeakTime = 1f;
+    bool TextDisplaying = false;
 
-
-    string[] reaction_Success= new string[]{
+    //リアクション
+    string[] reaction_Success = new string[]{
         ReactionSuccess.オーケー.ToString()+"！",ReactionSuccess.かしこまり.ToString()+"！",ReactionSuccess.了解.ToString()+"！",
-        
+
     };
-    //失敗時の取得はこの方法ではとれないため、一定時間認識がないときに表示する
     string[] reaction_Failure = new string[]{
         ReactionFailure.え.ToString()+"？",ReactionFailure.なんて.ToString()+"？",ReactionFailure.もっかい言って.ToString()+"!",
         ReactionFailure.聞き取られへんて.ToString()+"！",ReactionFailure.ちゃんと喋れ.ToString()+"！"
@@ -47,10 +49,12 @@ public class VoiceToText : MonoBehaviour
 
         characterReactionText = characterReactionOBJ.GetComponentInChildren<Text>();
         text.text = "音声認識待機中";
+
+        characterReactionOBJ.SetActive(false);
         //dictationRecognizer=new DictationRecognizer();
         //dictationRecognizer.DictationResult += DictationRecResult;
-       // dictationRecognizer.DictationError += DictationRecError;
-     //dictationRecognizer.DictationComplete += DictationRecComplete;
+        // dictationRecognizer.DictationError += DictationRecError;
+        //dictationRecognizer.DictationComplete += DictationRecComplete;
         // キーワード認識の初期化
         keywordRecognizer = new KeywordRecognizer(keywords);
         //イベントに登録
@@ -58,36 +62,50 @@ public class VoiceToText : MonoBehaviour
         keywordRecognizer.Start();
 
         Debug.Log("keyword音声認識開始");
-      
+
         //dictationRecognizer.Start();
         //Debug.Log("dictation音声認識開始");
-   
-   
+
+
     }
 
     void Update()
     {
-        Debug.Log("音声入力音量:"+ voiceSetting.GetVoiceVolume);
+        Debug.Log("音声入力音量:" + voiceSetting.GetVoiceVolume);
+
+        if(TextDisplaying==true)
+        {    
+            textdisplayTimeCount += Time.deltaTime;
+         
+            if (textdisplayTimeCount >= TextDisplayTime)
+            {
+                characterReactionOBJ.SetActive(false);
+                TextDisplaying = false;
+                textdisplayTimeCount = 0f;
+            }
+        }
+
         TimeCount += Time.deltaTime;
         //if(TimeCount >= noSpeakTime)
-        if(voiceSetting.GetVoiceVolume > 0.3f && TimeCount >= noSpeakTime)
+        if (voiceSetting.GetVoiceVolume > 0.3f && TimeCount >= noSpeakTime)
         {
             //一定時間認識がないときに失敗リアクションを表示
-SuccessOrFilure(false);
+            SuccessOrFilure(false);
 
             //Debug.Log("認識失敗リアクション表示");
             TimeCount = 0f;
         }
     }
+
     //音声入力があったと判定されたときに呼ばれる　　　　　　　認識された音声データ
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
-       // Debug.Log($"認識された言葉: {args.text}");
-       // Debug.Log($"信頼度: {args.confidence}");
+        // Debug.Log($"認識された言葉: {args.text}");
+        // Debug.Log($"信頼度: {args.confidence}");
 
         recognizedText = text.text = args.text;
 
-SuccessOrFilure(true); //認識成功リアクション表示        
+        SuccessOrFilure(true); //認識成功リアクション表示        
         TimeCount = 0f; //認識されたのでタイムカウントリセット
 
         // 認識された言葉に応じて処理
@@ -111,21 +129,25 @@ SuccessOrFilure(true); //認識成功リアクション表示
                 break;
         }
     }
+
+    //命令成功失敗リアクション表示
     void SuccessOrFilure(bool isSuccess)
     {
-        if(isSuccess)
+        characterReactionOBJ.SetActive(true);
+        TextDisplaying = true;
+        if (isSuccess)
         {
             int index = Random.Range(0, reaction_Success.Length);
             characterReactionText.text = reaction_Success[index];
-            Debug.Log("認識成功リアクション表示");
+            //Debug.Log("認識成功リアクション表示");
             characterVoiceSettiing.SetVoiceNumber = index;
         }
         else
         {
             int index = Random.Range(0, reaction_Failure.Length);
             characterReactionText.text = reaction_Failure[index];
-            Debug.Log("認識失敗リアクション表示");
-            characterVoiceSettiing.SetVoiceNumber = index+4;
+            //Debug.Log("認識失敗リアクション表示");
+            characterVoiceSettiing.SetVoiceNumber = index + 4;
         }
     }
 
