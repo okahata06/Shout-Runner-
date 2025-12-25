@@ -63,6 +63,9 @@ public class PlayerMove : MonoBehaviour
             rb.velocity = Vector3.zero;
             return;
         }
+        //時間経過による速度変化
+        speed += 0.01f * Time.deltaTime;
+
         //速度による回転速度の調整
         RotateSpeed = speed * 40f;
 
