@@ -1006,7 +1006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distancePerScore: 0.1
-  mustScore: 1000
+  mustScore: 10000
   character: {fileID: 1558643534}
   stageTips:
   - {fileID: 1989576033079712494, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
@@ -1360,7 +1360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae8d7b7a2614bff4ab937bf440626331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4
   jump_vec: {x: 0, y: 3.5, z: 0}
 --- !u!114 &1558643542
 MonoBehaviour:

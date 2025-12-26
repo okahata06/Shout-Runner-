@@ -64,7 +64,7 @@ public class PlayerMove : MonoBehaviour
             return;
         }
         //ŽžŠÔŒo‰ß‚É‚æ‚é‘¬“x•Ï‰»
-        speed += 0.02f * Time.deltaTime;
+        speed += 0.04f * Time.deltaTime;
 
         if(foward==true&&!isCurve)
         {

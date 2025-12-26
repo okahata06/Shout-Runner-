@@ -375,7 +375,6 @@ MonoBehaviour:
   destroyVolume: 0.3
   woodEffectPrefab: {fileID: 8324863292140059677, guid: eb6a56f8b6aef904e8b16f6148552858, type: 3}
   dustEffectPrefab: {fileID: 7809182310449700484, guid: b1adf1c5a04e84c4e824c27b5e506842, type: 3}
-  Target: {fileID: 0}
 --- !u!65 &112793076565161950
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3827,7 +3826,6 @@ MonoBehaviour:
   destroyVolume: 0.3
   woodEffectPrefab: {fileID: 8324863292140059677, guid: eb6a56f8b6aef904e8b16f6148552858, type: 3}
   dustEffectPrefab: {fileID: 7809182310449700484, guid: b1adf1c5a04e84c4e824c27b5e506842, type: 3}
-  Target: {fileID: 0}
 --- !u!65 &9142107315114781995
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4045,7 +4043,6 @@ MonoBehaviour:
   destroyVolume: 0.3
   woodEffectPrefab: {fileID: 8324863292140059677, guid: eb6a56f8b6aef904e8b16f6148552858, type: 3}
   dustEffectPrefab: {fileID: 7809182310449700484, guid: b1adf1c5a04e84c4e824c27b5e506842, type: 3}
-  Target: {fileID: 0}
 --- !u!65 &1958851415453665502
 BoxCollider:
   m_ObjectHideFlags: 0
