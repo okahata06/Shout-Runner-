@@ -42,17 +42,21 @@ public class PlayerHealth : MonoBehaviour
             Hp2.sprite = HpRest;
             Hp3.sprite = HpRest;
         }
-
         else if(currentHealth == 2)
         {
             Hp1.sprite = HpRest;
             Hp2.sprite = HpRest;
             Hp3.sprite = HpEmpty;
         }
-
         else if (currentHealth == 1)
         {
             Hp1.sprite = HpRest;
+            Hp2.sprite = HpEmpty;
+            Hp3.sprite = HpEmpty;
+        }
+        else if (currentHealth == 0)
+        {
+            Hp1.sprite = HpEmpty;
             Hp2.sprite = HpEmpty;
             Hp3.sprite = HpEmpty;
         }
