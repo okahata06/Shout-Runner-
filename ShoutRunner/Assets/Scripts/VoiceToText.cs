@@ -16,6 +16,7 @@ public class VoiceToText : MonoBehaviour
     VoiceSetting voiceSetting;
     CharacterVoiceSettiing characterVoiceSettiing;
 
+    public static float maxVolume = 0;
     float TextDisplayTime = 1.3f;
     float textdisplayTimeCount = 0f;
     float TimeCount = 2f;
@@ -71,12 +72,15 @@ public class VoiceToText : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("âπê∫ì¸óÕâπó :" + voiceSetting.GetVoiceVolume);
+        //Debug.Log("âπê∫ì¸óÕâπó :" + voiceSetting.GetVoiceVolume);
 
-        if(TextDisplaying==true)
+        if (maxVolume < voiceSetting.GetVoiceVolume)
+            maxVolume = voiceSetting.GetVoiceVolume;
+
+        if (TextDisplaying==true)
         {    
             textdisplayTimeCount += Time.deltaTime;
-         
+
             if (textdisplayTimeCount >= TextDisplayTime)
             {
                 characterReactionOBJ.SetActive(false);

@@ -20,13 +20,16 @@ public class PlayerHealth : MonoBehaviour
     Sprite HpEmpty;
     [SerializeField, Header("HP_Max")]
     int maxHP = 3;
-    int currentHealth;
+    [SerializeField, Header("Result")]
+    GameObject Result;
+    public static int currentHealth;
     BoxCollider boxCol;
     Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+        Result.SetActive(false);
         currentHealth = maxHP;
         boxCol = GetComponent<BoxCollider>();
         anim = GetComponent<Animator>();
@@ -59,6 +62,8 @@ public class PlayerHealth : MonoBehaviour
             Hp1.sprite = HpEmpty;
             Hp2.sprite = HpEmpty;
             Hp3.sprite = HpEmpty;
+
+            Result.SetActive(true);
         }
     }
     
