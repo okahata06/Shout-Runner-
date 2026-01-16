@@ -11,6 +11,8 @@ public class VoiceToText : MonoBehaviour
     Text text;
     [SerializeField, Header("キャラ反応表示用OBJ")]
     GameObject characterReactionOBJ;
+    [SerializeField, Header("最低取得音量")]
+float minVoiceVolume = 0.01f;
     Text characterReactionText;
 
     VoiceSetting voiceSetting;
@@ -19,8 +21,9 @@ public class VoiceToText : MonoBehaviour
     float TextDisplayTime = 1.3f;
     float textdisplayTimeCount = 0f;
     float TimeCount = 2f;
-    float noSpeakTime = 1f;
+    float noSpeakTime = 3.5f;
     bool TextDisplaying = false;
+    bool isSpeaking = false;
 
     //リアクション
     string[] reaction_Success = new string[]{
@@ -86,10 +89,10 @@ public class VoiceToText : MonoBehaviour
         }
 
         TimeCount += Time.deltaTime;
-        //if(TimeCount >= noSpeakTime)
-        if (voiceSetting.GetVoiceVolume > 0.3f && TimeCount >= noSpeakTime)
+        //失敗リアクションを表示
+        if ( TimeCount >= noSpeakTime                 //時間経過
+            ) 
         {
-            //一定時間認識がないときに失敗リアクションを表示
             SuccessOrFilure(false);
 
             //Debug.Log("認識失敗リアクション表示");
@@ -105,7 +108,13 @@ public class VoiceToText : MonoBehaviour
 
         recognizedText = text.text = args.text;
 
-        SuccessOrFilure(true); //認識成功リアクション表示        
+        //if (minVoiceVolume < voiceSetting.GetVoiceVolume)
+        //{
+        //    isSpeaking = true;
+        //}
+
+        SuccessOrFilure(true); //認識成功リアクション表示
+
         TimeCount = 0f; //認識されたのでタイムカウントリセット
 
         // 認識された言葉に応じて処理
@@ -141,6 +150,7 @@ public class VoiceToText : MonoBehaviour
             characterReactionText.text = reaction_Success[index];
             //Debug.Log("認識成功リアクション表示");
             characterVoiceSettiing.SetVoiceNumber = index;
+            isSpeaking = false;
         }
         else
         {
@@ -148,6 +158,7 @@ public class VoiceToText : MonoBehaviour
             characterReactionText.text = reaction_Failure[index];
             //Debug.Log("認識失敗リアクション表示");
             characterVoiceSettiing.SetVoiceNumber = index + 4;
+            isSpeaking = false;
         }
     }
 

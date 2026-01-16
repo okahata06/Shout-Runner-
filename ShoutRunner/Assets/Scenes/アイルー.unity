@@ -1288,6 +1288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 2124104857}
   characterReactionOBJ: {fileID: 1016831185}
+  minVoiceVolume: 0.005
 --- !u!114 &1558643536
 MonoBehaviour:
   m_ObjectHideFlags: 0
