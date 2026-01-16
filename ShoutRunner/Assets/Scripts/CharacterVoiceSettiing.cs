@@ -18,7 +18,7 @@ public class CharacterVoiceSettiing : MonoBehaviour
     {
         voiceSource=GetComponent<AudioSource>();
 
-        voiceSource.clip = voiceClip[9];
+        voiceSource.clip = voiceClip[9];//énÇ‹ÇËÇÃÉ{ÉXâπê∫
         voiceSource.Play();
 
         voiceNumber = -1;
