@@ -33,6 +33,7 @@ public class Result : MonoBehaviour
 
         ScoreText.text = StageTips.playerScore.ToString();
         VolumeText.text = scoreMultiplier.ToString();
+        TotalText.text = total.ToString();
     }
 
     // Start is called before the first frame update
