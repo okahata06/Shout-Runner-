@@ -29,7 +29,7 @@ public class Result : MonoBehaviour
         float scoreMultiplier = Mathf.Floor(rawMultiplier * 10f) / 10f;
 
         // ÉXÉRÉAâ¡éZ
-        total += StageTips.playerScore * scoreMultiplier;
+        total = Mathf.Round(StageTips.playerScore * scoreMultiplier);
 
         ScoreText.text = StageTips.playerScore.ToString();
         VolumeText.text = scoreMultiplier.ToString();

@@ -66,7 +66,7 @@ public class StageTips : MonoBehaviour
         distanceAccumulated += move;
 
         //—ÝÏ‹——£‚ª0.1‚ð’´‚¦‚½‚çƒXƒRƒA‚ð‰ÁŽZ
-        while (distanceAccumulated >= distancePerScore)
+        while (distanceAccumulated >= distancePerScore && PlayerHealth.currentHealth > 0)
         {
             playerScore += 1;
             distanceAccumulated -= distancePerScore;
