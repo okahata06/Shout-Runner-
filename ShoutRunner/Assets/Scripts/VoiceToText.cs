@@ -11,8 +11,9 @@ public class VoiceToText : MonoBehaviour
     Text text;
     [SerializeField, Header("ƒLƒƒƒ‰”½‰•\¦—pOBJ")]
     GameObject characterReactionOBJ;
-  //  [SerializeField, Header("Å’áæ“¾‰¹—Ê")]
-//float minVoiceVolume = 0.01f;
+
+    //  [SerializeField, Header("Å’áæ“¾‰¹—Ê")]
+    //float minVoiceVolume = 0.01f;
     Text characterReactionText;
 
     VoiceSetting voiceSetting;

@@ -12,11 +12,14 @@ public class PlayerMove : MonoBehaviour
     float speed = 3f;
     [SerializeField, Header("跳躍力")]
     Vector3 jump_vec = new Vector3(0, 10, 0);
+    [SerializeField, Header("波エフェクト")]
+    ParticleSystem waveEffect;
     float speedDecay = 6f;
     bool isJump = false;
     bool isCurve = false;
 
     bool foward = false;
+    bool waveEffectPlayed = false;
 
     float time = 0;
     float crawlTime = 2.5f;
@@ -72,7 +75,7 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-        //速度による回転速度の調整
+        //移動速度による回転速度の調整
         RotateSpeed = speed * 40f;
 
         //音声認識なしデバッグ用
@@ -115,6 +118,34 @@ public class PlayerMove : MonoBehaviour
 
         }
 
+        if(anim.GetBool(animationState.Scream.ToString()))
+        {
+            time += Time.deltaTime;
+            if (time >= 1f&&time<2f)
+            {
+
+
+                if (!waveEffectPlayed)
+                {
+                    waveEffectPlayed = true;
+                    waveEffect.transform.position = new Vector3(tr.position.x, tr.position.y + 1.2f, tr.position.z);
+                    waveEffect.transform.rotation = Quaternion.Euler(new Vector3(-91, 0, 0));
+                    Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
+
+                }
+            }
+            else if(time>=2f)
+            {
+                rb.velocity = Vector3.forward * speed;
+                anim.SetBool(animationState.Scream.ToString(), false);
+                waveEffectPlayed = false;   
+                time = 0;
+                command = VoiceToText.VoiceCommand.Null;
+
+            }
+        }
+            
+        
 
         //伏せ処理
         if (anim.GetBool(animationState.Crawl.ToString()))
@@ -326,9 +357,9 @@ public class PlayerMove : MonoBehaviour
                 break;
 
             case nameof(VoiceToText.VoiceCommand.なんでやねん):
-                //追加の処理がないため必要なし↓
-                //command = VoiceToText.VoiceCommand.なんでやねん;
-                rb.velocity = Vector3.forward * speed;
+                command = VoiceToText.VoiceCommand.なんでやねん;
+                rb.velocity = Vector3.zero;
+                anim.SetBool(animationState.Scream.ToString(), true);
                 break;
 
             case nameof(VoiceToText.VoiceCommand.伏せ):
@@ -362,6 +393,7 @@ public class PlayerMove : MonoBehaviour
         Run,
         Jump,
         Crawl,
+        Scream,
         LeftCurve,
         RightCurve,
     }
