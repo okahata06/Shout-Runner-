@@ -19,6 +19,7 @@ public class PlayerMove : MonoBehaviour
     bool isCurve = false;
 
     bool foward = false;
+    bool waveEffectPlayed = false;
 
     float time = 0;
     float crawlTime = 2.5f;
@@ -117,17 +118,34 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-        if(recognizedText== VoiceToText.VoiceCommand.Ç»ÇÒÇ≈Ç‚ÇÀÇÒ.ToString())
+        if(anim.GetBool(animationState.Scream.ToString()))
         {
-            if(!waveEffect.isPlaying)
+            time += Time.deltaTime;
+            if (time >= 1f&&time<2f)
             {
-               
-                waveEffect.transform.position=new Vector3(tr.position.x,tr.position.y+1.2f,tr.position.z);
-                waveEffect.transform.rotation=Quaternion.Euler(new Vector3(-91,0,0));
-                Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
-                //waveEffect.Play();
+
+
+                if (!waveEffectPlayed)
+                {
+                    waveEffectPlayed = true;
+                    waveEffect.transform.position = new Vector3(tr.position.x, tr.position.y + 1.2f, tr.position.z);
+                    waveEffect.transform.rotation = Quaternion.Euler(new Vector3(-91, 0, 0));
+                    Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
+
+                }
+            }
+            else if(time>=2f)
+            {
+                rb.velocity = Vector3.forward * speed;
+                anim.SetBool(animationState.Scream.ToString(), false);
+                waveEffectPlayed = false;   
+                time = 0;
+                command = VoiceToText.VoiceCommand.Null;
+
             }
         }
+            
+        
 
         //ïöÇπèàóù
         if (anim.GetBool(animationState.Crawl.ToString()))
@@ -339,9 +357,9 @@ public class PlayerMove : MonoBehaviour
                 break;
 
             case nameof(VoiceToText.VoiceCommand.Ç»ÇÒÇ≈Ç‚ÇÀÇÒ):
-                //í«â¡ÇÃèàóùÇ™Ç»Ç¢ÇΩÇﬂïKóvÇ»ÇµÅ´
-                //command = VoiceToText.VoiceCommand.Ç»ÇÒÇ≈Ç‚ÇÀÇÒ;
-                rb.velocity = Vector3.forward * speed;
+                command = VoiceToText.VoiceCommand.Ç»ÇÒÇ≈Ç‚ÇÀÇÒ;
+                rb.velocity = Vector3.zero;
+                anim.SetBool(animationState.Scream.ToString(), true);
                 break;
 
             case nameof(VoiceToText.VoiceCommand.ïöÇπ):
@@ -375,6 +393,7 @@ public class PlayerMove : MonoBehaviour
         Run,
         Jump,
         Crawl,
+        Scream,
         LeftCurve,
         RightCurve,
     }
