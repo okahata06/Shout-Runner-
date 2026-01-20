@@ -12,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     float speed = 3f;
     [SerializeField, Header("跳躍力")]
     Vector3 jump_vec = new Vector3(0, 10, 0);
+    [SerializeField, Header("波エフェクト")]
+    ParticleSystem waveEffect;
     float speedDecay = 6f;
     bool isJump = false;
     bool isCurve = false;
@@ -72,7 +74,7 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-        //速度による回転速度の調整
+        //移動速度による回転速度の調整
         RotateSpeed = speed * 40f;
 
         //音声認識なしデバッグ用
@@ -115,6 +117,17 @@ public class PlayerMove : MonoBehaviour
 
         }
 
+        if(recognizedText== VoiceToText.VoiceCommand.なんでやねん.ToString())
+        {
+            if(!waveEffect.isPlaying)
+            {
+               
+                waveEffect.transform.position=new Vector3(tr.position.x,tr.position.y+1.2f,tr.position.z);
+                waveEffect.transform.rotation=Quaternion.Euler(new Vector3(-91,0,0));
+                Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
+                //waveEffect.Play();
+            }
+        }
 
         //伏せ処理
         if (anim.GetBool(animationState.Crawl.ToString()))
