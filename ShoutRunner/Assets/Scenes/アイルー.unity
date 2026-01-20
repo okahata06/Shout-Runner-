@@ -1110,7 +1110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScoreText: {fileID: 226795679}
   VolumeText: {fileID: 313051455}
-  TotalText: {fileID: 313051455}
+  TotalText: {fileID: 945544805}
 --- !u!114 &941805145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2307,6 +2307,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 284029949119737772, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
+      propertyPath: lengthInSec
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 284029949119737772, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
+      propertyPath: CollisionModule.minKillSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 284029949119737772, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 284029949119737772, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 284029949119737772, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 284029949119737772, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].probability
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 284029949119737772, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1269355921553284761, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.9513367
