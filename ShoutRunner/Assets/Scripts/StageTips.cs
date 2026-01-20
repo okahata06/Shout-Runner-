@@ -76,7 +76,7 @@ public class StageTips : MonoBehaviour
         lastPosition = playerPos;
 
         //スコアテキスト修正
-        ScoreText.text = "SCORE:" + playerScore;
+        ScoreText.text = playerScore.ToString();
     }
     //指定のインデックスまでのステージチップを生成して管理下におく
     void UpdateStage(int toTipIndex)

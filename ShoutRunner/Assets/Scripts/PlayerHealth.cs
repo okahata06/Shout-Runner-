@@ -63,7 +63,8 @@ public class PlayerHealth : MonoBehaviour
             Hp2.sprite = HpEmpty;
             Hp3.sprite = HpEmpty;
 
-            Result.SetActive(true);
+            if (Result.activeSelf == false)
+                Result.SetActive(true);
         }
     }
     
