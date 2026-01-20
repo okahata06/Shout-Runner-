@@ -17,39 +17,40 @@ public class Result : MonoBehaviour
     [Header("スコアのテキスト")]
     public Text TotalText;
 
+    RankingManager ranking;
+
+    private void Awake()
+    {
+        ranking = FindFirstObjectByType<RankingManager>();
+    }
+
     private void OnEnable()
     {
-        Debug.Log(VoiceToText.maxVolume);
+        StartCoroutine(ResultText());
+    }
+
+    private IEnumerator ResultText()
+    {
         float volume = Mathf.Clamp01(VoiceToText.maxVolume);
 
-        // 倍率計算
+        //倍率計算
         float rawMultiplier = 1.0f + volume;
 
-        // 小数第1位で切り捨て
+        //小数第1位で切り捨て
         float scoreMultiplier = Mathf.Floor(rawMultiplier * 10f) / 10f;
 
-        // スコア加算
+        //スコア加算
         total = Mathf.Round(StageTips.playerScore * scoreMultiplier);
+        ranking.AddScore((int)total);
 
         ScoreText.text = StageTips.playerScore.ToString();
-        VolumeText.text = scoreMultiplier.ToString();
+
+        yield return new WaitForSeconds(2);
+
+        VolumeText.text = "×"　+ scoreMultiplier.ToString();
+
+        yield return new WaitForSeconds(2);
+
         TotalText.text = total.ToString();
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    //private IEnumerator ResultText()
-    //{
-
-    //}
 }
