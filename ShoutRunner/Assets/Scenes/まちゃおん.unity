@@ -1942,6 +1942,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   jump_vec: {x: 0, y: 3.5, z: 0}
+  waveEffect: {fileID: 0}
 --- !u!114 &499953500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2164,6 +2165,7 @@ MonoBehaviour:
   ScoreText: {fileID: 1902287416}
   VolumeText: {fileID: 1719498324}
   TotalText: {fileID: 21177342}
+  Ranking: {fileID: 160791656}
 --- !u!114 &627422557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4807,10 +4809,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: e3810958aa1707745b5ce82ab754c4db, type: 3}
-    m_FontSize: 50
+    m_FontSize: 65
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 1
+    m_MinSize: 0
     m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -4818,7 +4820,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: a
+  m_Text: 0
 --- !u!222 &1609312252
 CanvasRenderer:
   m_ObjectHideFlags: 0

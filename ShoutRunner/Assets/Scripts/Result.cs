@@ -11,17 +11,22 @@ public class Result : MonoBehaviour
     [Header("スコアのテキスト")]
     public Text ScoreText;
 
-    [Header("スコアのテキスト")]
+    [Header("ボリュームボーナスのテキスト")]
     public Text VolumeText;
 
-    [Header("スコアのテキスト")]
+    [Header("トータルのテキスト")]
     public Text TotalText;
+
+    [Header("ランキング")]
+    public GameObject Ranking;
 
     RankingManager ranking;
 
     private void Awake()
     {
         ranking = FindFirstObjectByType<RankingManager>();
+
+        Ranking.SetActive(false);
     }
 
     private void OnEnable()
@@ -52,5 +57,9 @@ public class Result : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         TotalText.text = total.ToString();
+
+        yield return new WaitForSeconds(3);
+
+        Ranking.SetActive(true); 
     }
 }
