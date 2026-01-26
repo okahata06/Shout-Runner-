@@ -35,8 +35,4 @@ public class ParticleSetting : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-     //イベントを自作する？   
-    }
 }

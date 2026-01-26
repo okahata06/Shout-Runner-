@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5332542396600569383}
   serializedVersion: 2
   m_LocalRotation: {x: -0.71325046, y: 0, z: 0, w: 0.70090926}
-  m_LocalPosition: {x: -1.27, y: 1.33, z: 30.08281}
+  m_LocalPosition: {x: -1.3030396, y: 1.33, z: 15.671476}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4918,6 +4918,7 @@ GameObject:
   - component: {fileID: 8800338087000324420}
   - component: {fileID: 5093118632096013744}
   - component: {fileID: 8414927827611330814}
+  - component: {fileID: 7569127365589685760}
   m_Layer: 0
   m_Name: BreakCheckBox
   m_TagString: Untagged
@@ -5038,6 +5039,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7569127365589685760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5370015520789700640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d648fd186842623459c8113b27fe2516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6569560399243592371
 GameObject:
   m_ObjectHideFlags: 0
