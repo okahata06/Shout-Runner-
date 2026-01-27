@@ -117,32 +117,6 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-        if(anim.GetBool(animationState.Scream.ToString()))
-        {
-            time += Time.deltaTime;
-            if (time >= 1f&&time<2f)
-            {
-
-
-                if (!waveEffectPlayed)
-                {
-                    waveEffectPlayed = true;
-                    waveEffect.transform.position = new Vector3(tr.position.x, tr.position.y + 1.2f, tr.position.z);
-                    waveEffect.transform.rotation = Quaternion.Euler(new Vector3(-91, 0, 0));
-                    Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
-
-                }
-            }
-            else if(time>=2f)
-            {
-                rb.velocity = Vector3.forward * speed;
-                anim.SetBool(animationState.Scream.ToString(), false);
-                waveEffectPlayed = false;   
-                time = 0;
-                command = VoiceToText.VoiceCommand.Null;
-
-            }
-        }
             
         
 
@@ -172,10 +146,6 @@ public class PlayerMove : MonoBehaviour
         //Debug.Log("pos"+tr.position);
 
         //Debug.Log("command:" + command);
-        if(isJump)
-        {
-            JumpMove();
-        }
 
         //1レーン分移動したら直進に戻す
         if (command == VoiceToText.VoiceCommand.ひだり)
@@ -258,6 +228,13 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
+        //ジャンプ
+        if (isJump)
+        {
+            JumpMove();
+        }
+
+        //回転
         if (isCurve)
         {
             RotateToAngle(command);
@@ -265,8 +242,6 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    //曲がり角で方向転換を発言した場合、通路の中心まで来てから方向転換するようにする（曲がった最初は中心レーンから）
-    //T字路を実装した場合、曲がるタイミングでposを更新する必要がある
 
 
     //現在のアングルから指定アングルまで徐々に回転させる
@@ -331,16 +306,17 @@ public class PlayerMove : MonoBehaviour
         //方向転換など
         switch (text)
         {
+            //左
             case nameof(VoiceToText.VoiceCommand.ひだり):
                 command = VoiceToText.VoiceCommand.ひだり;
                 rb.velocity = new Vector3(-1, 0, 1) * speed;
                 break;
-
+            //右
             case nameof(VoiceToText.VoiceCommand.みぎ):
                 command = VoiceToText.VoiceCommand.みぎ;
                 rb.velocity = new Vector3(1, 0, 1) * speed;
                 break;
-
+            //叫び
             case nameof(VoiceToText.VoiceCommand.なんでやねん):
                 command = VoiceToText.VoiceCommand.なんでやねん;
                 rb.velocity = Vector3.zero;
@@ -370,7 +346,33 @@ public class PlayerMove : MonoBehaviour
 
     }
 
+    void ScreamMove()
+    {
+        time += Time.deltaTime;
+        if (time >= 1f && time < 2f)
+        {
 
+
+            if (!waveEffectPlayed)
+            {
+                waveEffectPlayed = true;
+                waveEffect.transform.position = new Vector3(tr.position.x, tr.position.y + 1.2f, tr.position.z);
+                waveEffect.transform.rotation = Quaternion.Euler(new Vector3(-92, 0, 0));
+                Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
+
+            }
+        }
+        else if (time >= 2f)
+        {
+            rb.velocity = Vector3.forward * speed;
+            anim.SetBool(animationState.Scream.ToString(), false);
+            waveEffectPlayed = false;
+            time = 0;
+            command = VoiceToText.VoiceCommand.Null;
+
+        }
+
+    }
 
     void JumpMove()
     {
