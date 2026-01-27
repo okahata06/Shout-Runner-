@@ -228,6 +228,12 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
+        //‹©‚Ñ
+        if (anim.GetBool(animationState.Scream.ToString()))
+        {
+            ScreamMove();
+        }
+
         //ƒWƒƒƒ“ƒv
         if (isJump)
         {
