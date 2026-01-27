@@ -164,32 +164,18 @@ public class PlayerMove : MonoBehaviour
 
 
         //ジャンプ処理
-        if (recognizedText == VoiceToText.VoiceCommand.ジャンプ.ToString() && !isJump)
-        {
-            isJump = true;
-
-            rb.velocity += jump_vec;
-        }
-        //ジャンプ中の処理
-        else if (isJump)
-        {
-            rb.velocity -= new Vector3(0, speedDecay * Time.deltaTime, 0);
-            if (tr.position.y < pos.y)
-            {
-                isJump = false;
-                command = VoiceToText.VoiceCommand.Null;
-                // Debug.Log("isJump=false");
-
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
-            }
-        }
-        //Debug.Log("velocityddd"+rb.velocity);
+        //if (recognizedText == VoiceToText.VoiceCommand.ジャンプ.ToString() && !isJump)
+        //{
+        //    isJump = true;
+        //    rb.velocity += jump_vec;
+        //}
         //Debug.Log("pos"+tr.position);
 
         //Debug.Log("command:" + command);
-
-
+        if(isJump)
+        {
+            JumpMove();
+        }
 
         //1レーン分移動したら直進に戻す
         if (command == VoiceToText.VoiceCommand.ひだり)
@@ -360,7 +346,7 @@ public class PlayerMove : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 anim.SetBool(animationState.Scream.ToString(), true);
                 break;
-
+            //伏せ
             case nameof(VoiceToText.VoiceCommand.伏せ):
                 command = VoiceToText.VoiceCommand.伏せ;
                 rb.velocity = Vector3.forward * speed * 0.5f;
@@ -368,9 +354,14 @@ public class PlayerMove : MonoBehaviour
                 boxCol.center = new Vector3(colliderPos.x, 0, colliderPos.z);
                 anim.SetBool(animationState.Crawl.ToString(), true);
                 break;
-
+                //ジャンプ
             case nameof(VoiceToText.VoiceCommand.ジャンプ) or nameof(VoiceToText.VoiceCommand.とべ):
                 command = VoiceToText.VoiceCommand.ジャンプ;
+              if(!isJump)
+                {
+                    isJump = true;
+                    rb.velocity += jump_vec;//上昇エネルギー付与
+                }
                 break;
 
         }
@@ -383,6 +374,18 @@ public class PlayerMove : MonoBehaviour
 
     void JumpMove()
     {
+                //ジャンプ中の処理
+            rb.velocity -= new Vector3(0, speedDecay * Time.deltaTime, 0);
+            if (tr.position.y < pos.y)
+            {
+                isJump = false;
+                command = VoiceToText.VoiceCommand.Null;
+                // Debug.Log("isJump=false");
+
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
+            }
+        Debug.Log("velocityddd" + rb.velocity);
 
 
     }
