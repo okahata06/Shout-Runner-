@@ -8,34 +8,33 @@ public class PlayerMove : MonoBehaviour
     Rigidbody rb;
     Transform tr;
     Animator anim;
+    VoiceToText voiceToText;
+    VoiceToText.VoiceCommand command;
     [SerializeField, Header("移動速度")]
     float speed = 3f;
     [SerializeField, Header("跳躍力")]
     Vector3 jump_vec = new Vector3(0, 10, 0);
     [SerializeField, Header("波エフェクト")]
     ParticleSystem waveEffect;
+
     float speedDecay = 6f;
-    bool isJump = false;
-    bool isCurve = false;
-
-    bool foward = false;
-    bool waveEffectPlayed = false;
-
     float time = 0;
     float crawlTime = 2.5f;
+    float RotateSpeed = 170f;
+    bool isJump = false;
+    bool isCurve = false;
+    bool foward = false;
+    bool waveEffectPlayed = false;
+    public static bool ismove = true;
+    string recognizedText;
     Vector3 pos;
     Vector3 forward_rot;
     Vector3 left_rot;
     Vector3 right_rot;
     Vector3 colliderSize;
     Vector3 colliderPos;
-    string recognizedText;
-    float RotateSpeed = 170f;
     Rean rean = Rean.Center;
-    VoiceToText voiceToText;
-    VoiceToText.VoiceCommand command;
 
-    public static bool ismove=true;
     // Start is called before the first frame update
     void Start()
     {
