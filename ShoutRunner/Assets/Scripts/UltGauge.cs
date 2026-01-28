@@ -8,10 +8,12 @@ public class UltGauge : MonoBehaviour
     [Header("ウルトゲージのイメージ")]
     [SerializeField] Image UltGaugeImage;
 
+    public static float ultGauge = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        UltGaugeImage.fillAmount = 0.0f;
+        UltGaugeImage.fillAmount = 1.0f;
     }
 
     // Update is called once per frame
@@ -21,5 +23,15 @@ public class UltGauge : MonoBehaviour
         {
             UltGaugeImage.fillAmount += Time.deltaTime / 50;
         }
+
+        if(PlayerMove.isUlt)
+        {
+            UltGaugeImage.fillAmount = 0;
+            PlayerMove.isUlt = false;
+        }
+
+        ultGauge = UltGaugeImage.fillAmount;
+
+        Debug.Log(ultGauge);
     }
 }

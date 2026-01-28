@@ -1940,8 +1940,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae8d7b7a2614bff4ab937bf440626331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 3
   jump_vec: {x: 0, y: 3.5, z: 0}
+  waveEffect: {fileID: 8074301774684205567, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
 --- !u!114 &499953500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4878,6 +4879,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 90db3c898e7676c43aa37e502974c50a, type: 3}
       propertyPath: m_Name
       value: Player (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 90db3c898e7676c43aa37e502974c50a, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 90db3c898e7676c43aa37e502974c50a, type: 3}
       propertyPath: m_Controller

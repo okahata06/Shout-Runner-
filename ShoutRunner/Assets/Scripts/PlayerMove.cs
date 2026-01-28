@@ -26,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     bool foward = false;
     bool waveEffectPlayed = false;
     public static bool ismove = true;
+    public static bool isUlt = false;
     string recognizedText;
     Vector3 pos;
     Vector3 forward_rot;
@@ -52,9 +53,6 @@ public class PlayerMove : MonoBehaviour
         forward_rot = tr.eulerAngles;
         left_rot = new Vector3(forward_rot.x, forward_rot.y - 45, forward_rot.z);
         right_rot = new Vector3(forward_rot.x, forward_rot.y + 45, forward_rot.z);
-
-
-        
     }
 
     // Update is called once per frame
@@ -71,7 +69,6 @@ public class PlayerMove : MonoBehaviour
         if(foward==true&&!isCurve)
         {
                 rb.velocity = Vector3.forward * speed;
-
         }
 
         //à⁄ìÆë¨ìxÇ…ÇÊÇÈâÒì]ë¨ìxÇÃí≤êÆ
@@ -116,9 +113,6 @@ public class PlayerMove : MonoBehaviour
 
 
         }
-
-            
-        
 
         //ïöÇπèàóù
         if (anim.GetBool(animationState.Crawl.ToString()))
@@ -185,9 +179,6 @@ public class PlayerMove : MonoBehaviour
                 }
 
             }
-
-
-
         }
         else if (command == VoiceToText.VoiceCommand.Ç›Ç¨)
         {
@@ -227,6 +218,7 @@ public class PlayerMove : MonoBehaviour
 
             }
         }
+
 
         //ã©Ç—
         if (anim.GetBool(animationState.Scream.ToString()))
@@ -324,6 +316,8 @@ public class PlayerMove : MonoBehaviour
                 break;
             //ã©Ç—
             case nameof(VoiceToText.VoiceCommand.Ç»ÇÒÇ≈Ç‚ÇÀÇÒ):
+                if (UltGauge.ultGauge < 1.0f)
+                    return;
                 command = VoiceToText.VoiceCommand.Ç»ÇÒÇ≈Ç‚ÇÀÇÒ;
                 rb.velocity = Vector3.zero;
                 anim.SetBool(animationState.Scream.ToString(), true);
@@ -347,9 +341,6 @@ public class PlayerMove : MonoBehaviour
                 break;
 
         }
-
-
-
     }
 
     void ScreamMove()
@@ -365,8 +356,9 @@ public class PlayerMove : MonoBehaviour
                 waveEffect.transform.position = new Vector3(tr.position.x, tr.position.y + 1.2f, tr.position.z);
                 waveEffect.transform.rotation = Quaternion.Euler(new Vector3(-92, 0, 0));
                 Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
+                isUlt = true;
 
-            }
+}
         }
         else if (time >= 2f)
         {
