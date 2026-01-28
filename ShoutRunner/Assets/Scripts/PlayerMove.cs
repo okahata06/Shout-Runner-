@@ -8,34 +8,34 @@ public class PlayerMove : MonoBehaviour
     Rigidbody rb;
     Transform tr;
     Animator anim;
+    VoiceToText voiceToText;
+    VoiceToText.VoiceCommand command;
     [SerializeField, Header("移動速度")]
     float speed = 3f;
     [SerializeField, Header("跳躍力")]
     Vector3 jump_vec = new Vector3(0, 10, 0);
     [SerializeField, Header("波エフェクト")]
     ParticleSystem waveEffect;
+
     float speedDecay = 6f;
-    bool isJump = false;
-    bool isCurve = false;
-
-    bool foward = false;
-    bool waveEffectPlayed = false;
-
     float time = 0;
     float crawlTime = 2.5f;
+    float RotateSpeed = 170f;
+    bool isJump = false;
+    bool isCurve = false;
+    bool foward = false;
+    bool waveEffectPlayed = false;
+    public static bool ismove = true;
+    public static bool isUlt = false;
+    string recognizedText;
     Vector3 pos;
     Vector3 forward_rot;
     Vector3 left_rot;
     Vector3 right_rot;
     Vector3 colliderSize;
     Vector3 colliderPos;
-    string recognizedText;
-    float RotateSpeed = 170f;
     Rean rean = Rean.Center;
-    VoiceToText voiceToText;
-    VoiceToText.VoiceCommand command;
 
-    public static bool ismove=true;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,9 +53,6 @@ public class PlayerMove : MonoBehaviour
         forward_rot = tr.eulerAngles;
         left_rot = new Vector3(forward_rot.x, forward_rot.y - 45, forward_rot.z);
         right_rot = new Vector3(forward_rot.x, forward_rot.y + 45, forward_rot.z);
-
-
-        
     }
 
     // Update is called once per frame
@@ -72,7 +69,6 @@ public class PlayerMove : MonoBehaviour
         if(foward==true&&!isCurve)
         {
                 rb.velocity = Vector3.forward * speed;
-
         }
 
         //移動速度による回転速度の調整
@@ -118,35 +114,6 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-        if(anim.GetBool(animationState.Scream.ToString()))
-        {
-            time += Time.deltaTime;
-            if (time >= 1f&&time<2f)
-            {
-
-
-                if (!waveEffectPlayed)
-                {
-                    waveEffectPlayed = true;
-                    waveEffect.transform.position = new Vector3(tr.position.x, tr.position.y + 1.2f, tr.position.z);
-                    waveEffect.transform.rotation = Quaternion.Euler(new Vector3(-91, 0, 0));
-                    Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
-
-                }
-            }
-            else if(time>=2f)
-            {
-                rb.velocity = Vector3.forward * speed;
-                anim.SetBool(animationState.Scream.ToString(), false);
-                waveEffectPlayed = false;   
-                time = 0;
-                command = VoiceToText.VoiceCommand.Null;
-
-            }
-        }
-            
-        
-
         //伏せ処理
         if (anim.GetBool(animationState.Crawl.ToString()))
         {
@@ -165,32 +132,14 @@ public class PlayerMove : MonoBehaviour
 
 
         //ジャンプ処理
-        if (recognizedText == VoiceToText.VoiceCommand.ジャンプ.ToString() && !isJump)
-        {
-            isJump = true;
-
-            rb.velocity += jump_vec;
-        }
-        //ジャンプ中の処理
-        else if (isJump)
-        {
-            rb.velocity -= new Vector3(0, speedDecay * Time.deltaTime, 0);
-            if (tr.position.y < pos.y)
-            {
-                isJump = false;
-                command = VoiceToText.VoiceCommand.Null;
-                // Debug.Log("isJump=false");
-
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
-            }
-        }
-        //Debug.Log("velocityddd"+rb.velocity);
+        //if (recognizedText == VoiceToText.VoiceCommand.ジャンプ.ToString() && !isJump)
+        //{
+        //    isJump = true;
+        //    rb.velocity += jump_vec;
+        //}
         //Debug.Log("pos"+tr.position);
 
         //Debug.Log("command:" + command);
-
-
 
         //1レーン分移動したら直進に戻す
         if (command == VoiceToText.VoiceCommand.ひだり)
@@ -230,9 +179,6 @@ public class PlayerMove : MonoBehaviour
                 }
 
             }
-
-
-
         }
         else if (command == VoiceToText.VoiceCommand.みぎ)
         {
@@ -273,6 +219,20 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
+
+        //叫び
+        if (anim.GetBool(animationState.Scream.ToString()))
+        {
+            ScreamMove();
+        }
+
+        //ジャンプ
+        if (isJump)
+        {
+            JumpMove();
+        }
+
+        //回転
         if (isCurve)
         {
             RotateToAngle(command);
@@ -280,8 +240,6 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    //曲がり角で方向転換を発言した場合、通路の中心まで来てから方向転換するようにする（曲がった最初は中心レーンから）
-    //T字路を実装した場合、曲がるタイミングでposを更新する必要がある
 
 
     //現在のアングルから指定アングルまで徐々に回転させる
@@ -346,22 +304,25 @@ public class PlayerMove : MonoBehaviour
         //方向転換など
         switch (text)
         {
+            //左
             case nameof(VoiceToText.VoiceCommand.ひだり):
                 command = VoiceToText.VoiceCommand.ひだり;
                 rb.velocity = new Vector3(-1, 0, 1) * speed;
                 break;
-
+            //右
             case nameof(VoiceToText.VoiceCommand.みぎ):
                 command = VoiceToText.VoiceCommand.みぎ;
                 rb.velocity = new Vector3(1, 0, 1) * speed;
                 break;
-
+            //叫び
             case nameof(VoiceToText.VoiceCommand.なんでやねん):
+                if (UltGauge.ultGauge < 1.0f)
+                    return;
                 command = VoiceToText.VoiceCommand.なんでやねん;
                 rb.velocity = Vector3.zero;
                 anim.SetBool(animationState.Scream.ToString(), true);
                 break;
-
+            //伏せ
             case nameof(VoiceToText.VoiceCommand.伏せ):
                 command = VoiceToText.VoiceCommand.伏せ;
                 rb.velocity = Vector3.forward * speed * 0.5f;
@@ -369,21 +330,62 @@ public class PlayerMove : MonoBehaviour
                 boxCol.center = new Vector3(colliderPos.x, 0, colliderPos.z);
                 anim.SetBool(animationState.Crawl.ToString(), true);
                 break;
-
+                //ジャンプ
             case nameof(VoiceToText.VoiceCommand.ジャンプ) or nameof(VoiceToText.VoiceCommand.とべ):
                 command = VoiceToText.VoiceCommand.ジャンプ;
+              if(!isJump)
+                {
+                    isJump = true;
+                    rb.velocity += jump_vec;//上昇エネルギー付与
+                }
                 break;
 
         }
+    }
+
+    void ScreamMove()
+    {
+        time += Time.deltaTime;
+        if (time >= 1f && time < 2f)
+        {
 
 
+            if (!waveEffectPlayed)
+            {
+                waveEffectPlayed = true;
+                waveEffect.transform.position = new Vector3(tr.position.x, tr.position.y + 1.2f, tr.position.z);
+                waveEffect.transform.rotation = Quaternion.Euler(new Vector3(-92, 0, 0));
+                Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
+                isUlt = true;
+
+}
+        }
+        else if (time >= 2f)
+        {
+            rb.velocity = Vector3.forward * speed;
+            anim.SetBool(animationState.Scream.ToString(), false);
+            waveEffectPlayed = false;
+            time = 0;
+            command = VoiceToText.VoiceCommand.Null;
+
+        }
 
     }
 
-
-
     void JumpMove()
     {
+                //ジャンプ中の処理
+            rb.velocity -= new Vector3(0, speedDecay * Time.deltaTime, 0);
+            if (tr.position.y < pos.y)
+            {
+                isJump = false;
+                command = VoiceToText.VoiceCommand.Null;
+                // Debug.Log("isJump=false");
+
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
+            }
+        Debug.Log("velocityddd" + rb.velocity);
 
 
     }
