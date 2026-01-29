@@ -348,8 +348,6 @@ public class PlayerMove : MonoBehaviour
         time += Time.deltaTime;
         if (time >= 1f && time < 2f)
         {
-
-
             if (!waveEffectPlayed)
             {
                 waveEffectPlayed = true;
