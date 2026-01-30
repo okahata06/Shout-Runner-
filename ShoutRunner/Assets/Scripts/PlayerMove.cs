@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     Vector3 jump_vec = new Vector3(0, 10, 0);
     [SerializeField, Header("波エフェクト")]
     ParticleSystem waveEffect;
+    CharacterVoiceSettiing characterVoiceSettiing;
 
     float speedDecay = 6f;
     float time = 0;
@@ -44,6 +45,7 @@ public class PlayerMove : MonoBehaviour
         tr = GetComponent<Transform>();
         anim = GetComponent<Animator>();
         voiceToText = GetComponent<VoiceToText>();
+        characterVoiceSettiing = GetComponent<CharacterVoiceSettiing>();
         recognizedText = voiceToText.GetSetRecognizedText;
         command = VoiceToText.VoiceCommand.Null;
         
@@ -147,6 +149,7 @@ public class PlayerMove : MonoBehaviour
             //左端
             if (rean == Rean.Left)
             {
+                isCurve = false;
                 rb.velocity = Vector3.forward * speed;
                 command = VoiceToText.VoiceCommand.Null;
             }
@@ -221,6 +224,7 @@ public class PlayerMove : MonoBehaviour
             //右端
             else if (rean == Rean.Right)
             {
+                    isCurve = false;
                 rb.velocity = Vector3.forward * speed;
                 command = VoiceToText.VoiceCommand.Null;
 
@@ -359,13 +363,13 @@ public class PlayerMove : MonoBehaviour
         {
             if (!waveEffectPlayed)
             {
+                characterVoiceSettiing.SetVoiceNumber= 12; 
                 waveEffectPlayed = true;
                 waveEffect.transform.position = new Vector3(tr.position.x, tr.position.y + 1.2f, tr.position.z);
                 waveEffect.transform.rotation = Quaternion.Euler(new Vector3(-92, 0, 0));
                 Instantiate(waveEffect, waveEffect.transform.position, waveEffect.transform.rotation);
                 isUlt = true;
-
-}
+            }
         }
         else if (time >= 2f)
         {

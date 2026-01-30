@@ -8,7 +8,7 @@ public class CharacterVoiceSettiing : MonoBehaviour
     AudioSource voiceSource;
 
     [SerializeField]
-    AudioClip[] voiceClip=new AudioClip[10];
+    AudioClip[] voiceClip=new AudioClip[15];
 
     int voiceNumber;
 
