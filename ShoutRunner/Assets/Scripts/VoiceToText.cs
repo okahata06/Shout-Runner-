@@ -60,6 +60,7 @@ public class VoiceToText : MonoBehaviour
         //dictationRecognizer.DictationResult += DictationRecResult;
         // dictationRecognizer.DictationError += DictationRecError;
         //dictationRecognizer.DictationComplete += DictationRecComplete;
+   
         // キーワード認識の初期化
         keywordRecognizer = new KeywordRecognizer(keywords);
         //イベントに登録

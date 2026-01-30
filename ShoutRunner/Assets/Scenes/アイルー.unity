@@ -1111,6 +1111,7 @@ MonoBehaviour:
   ScoreText: {fileID: 226795679}
   VolumeText: {fileID: 313051455}
   TotalText: {fileID: 945544805}
+  Ranking: {fileID: 0}
 --- !u!114 &941805145
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class UltGauge : MonoBehaviour
     {
         if (UltGaugeImage.fillAmount <= 1.0)
         {
-            UltGaugeImage.fillAmount += Time.deltaTime / 50;
+            UltGaugeImage.fillAmount += Time.deltaTime / 10;
         }
 
         if(PlayerMove.isUlt)
@@ -32,6 +32,6 @@ public class UltGauge : MonoBehaviour
 
         ultGauge = UltGaugeImage.fillAmount;
 
-        Debug.Log(ultGauge);
+        //Debug.Log(ultGauge);
     }
 }
