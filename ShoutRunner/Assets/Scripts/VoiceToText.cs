@@ -46,7 +46,7 @@ public class VoiceToText : MonoBehaviour
     //認識判定したい単語
     private string[] keywords = new string[]
     { VoiceCommand.ジャンプ.ToString(),VoiceCommand.伏せ.ToString(),VoiceCommand.なんでやねん.ToString(),
-      VoiceCommand.ひだり.ToString(),VoiceCommand.みぎ.ToString()
+      VoiceCommand.ひだり.ToString(),VoiceCommand.みぎ.ToString(),VoiceCommand.すすめ.ToString()
     };
     void Start()
     {
@@ -135,7 +135,7 @@ public class VoiceToText : MonoBehaviour
                 Debug.Log("ジャンプ");
                 break;
             case nameof(VoiceCommand.なんでやねん):
-                Debug.Log("進め");
+                Debug.Log("なんでやねん");
                 break;
             case nameof(VoiceCommand.ひだり):
                 Debug.Log("ひだり");
@@ -145,6 +145,9 @@ public class VoiceToText : MonoBehaviour
                 break;
             case nameof(VoiceCommand.伏せ):
                 Debug.Log("伏せ");
+                break;
+                case nameof(VoiceCommand.すすめ):
+                Debug.Log("すすめ");
                 break;
         }
     }
@@ -194,6 +197,7 @@ public class VoiceToText : MonoBehaviour
 
     public enum VoiceCommand
     {
+        すすめ,
         ジャンプ,
         とべ,
         なんでやねん,

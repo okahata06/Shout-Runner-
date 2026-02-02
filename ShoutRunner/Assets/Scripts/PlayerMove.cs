@@ -133,7 +133,6 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-Debug.Log(command);
         //1レーン分移動したら直進に戻す
         if (command == VoiceToText.VoiceCommand.ひだり)
         {
@@ -142,7 +141,9 @@ Debug.Log(command);
             {
                 isCurve = false;
                 rb.velocity = Vector3.forward * speed;
+                tr.position = new Vector3(pos.x - 3, tr.position.y, tr.position.z);
                 command = VoiceToText.VoiceCommand.Null;
+                Debug.Log(command);
             }
             //中央
             else if (rean == Rean.Center)
@@ -153,10 +154,12 @@ Debug.Log(command);
                     isCurve = false;
                     rean = Rean.Left;
                     rb.velocity = Vector3.forward * speed;
+                tr.position = new Vector3(pos.x - 3, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
+                    Debug.Log(command);
                 }
             }
             //右端
@@ -168,10 +171,12 @@ Debug.Log(command);
                     isCurve = false;
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
+                tr.position = new Vector3(pos.x , tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
+                    Debug.Log(command);
                 }
 
             }
@@ -188,10 +193,12 @@ Debug.Log(command);
                     isCurve = false;
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
+                tr.position = new Vector3(pos.x , tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
+                    Debug.Log(command);
                 }
             }
             //中央
@@ -206,10 +213,12 @@ Debug.Log(command);
 
                     rean = Rean.Right;
                     rb.velocity = Vector3.forward * speed;
+                tr.position = new Vector3(pos.x +3, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
+                    Debug.Log(command);
                 }
             }
             //右端
@@ -217,7 +226,9 @@ Debug.Log(command);
             {
                     isCurve = false;
                 rb.velocity = Vector3.forward * speed;
+                tr.position = new Vector3(pos.x +3, tr.position.y, tr.position.z);
                 command = VoiceToText.VoiceCommand.Null;
+                Debug.Log(command);
 
             }
         }
@@ -304,7 +315,7 @@ Debug.Log(command);
         if (command != VoiceToText.VoiceCommand.Null)
             return;
 
-        pos = tr.position;
+        //pos = tr.position;
         //方向転換など
         switch (text)
         {
