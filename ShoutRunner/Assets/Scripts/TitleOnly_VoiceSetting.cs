@@ -1,13 +1,22 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Windows.Speech;
-using UnityEngine.SceneManagement;
 
 //音声認識によって入力単語をテキスト化するスクリプト
 public class TitleOnly_VoiceSetting : MonoBehaviour
 {
+    [SerializeField] GameObject IrisPanel;
+    [SerializeField] RectTransform unmask;
+
+    private bool _sceneChange = true;//コルーチンを1度だけ処理する用
+
+    readonly Vector2 IRIS_MID_SCALE1 = new Vector2(1.0f, 1.0f);
+    readonly Vector2 IRIS_MID_SCALE2 = new Vector2(3.0f, 3.0f);
 
     KeywordRecognizer keywordRecognizer;
 
@@ -26,6 +35,8 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
         keywordRecognizer.OnPhraseRecognized += OnPhraseRecognized;
         keywordRecognizer.Start();
 
+        IrisPanel.SetActive(false);
+        _sceneChange = true;
     }
 
     void Update()
@@ -43,7 +54,7 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
         if(args.text==nameof(VoiceCommand.スタート))
         {
             Debug.Log("スタート");
-            ChangeScene();
+            StartCoroutine(TitleSelect());
         }
 
     }
@@ -64,9 +75,23 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
         スタート,
     }
 
-
-    void ChangeScene()
+    public void IrisOut()
     {
+        unmask.DOScale(IRIS_MID_SCALE1, 0.2f).SetEase(Ease.InCubic);
+        unmask.DOScale(IRIS_MID_SCALE2, 0.2f).SetDelay(0.2f).SetEase(Ease.OutCubic);
+        unmask.DOScale(new Vector2(0, 0), 0.4f).SetDelay(0.4f).SetEase(Ease.InCubic);
+    }
+
+    //void ChangeScene()
+    //{
+    //    SceneManager.LoadScene("Main");
+    //}
+
+    private IEnumerator TitleSelect()
+    {
+        IrisPanel.SetActive(true);
+        IrisOut();
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("Main");
     }
 
