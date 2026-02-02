@@ -133,16 +133,7 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-        //ジャンプ処理
-        //if (recognizedText == VoiceToText.VoiceCommand.ジャンプ.ToString() && !isJump)
-        //{
-        //    isJump = true;
-        //    rb.velocity += jump_vec;
-        //}
-        //Debug.Log("pos"+tr.position);
-
-        //Debug.Log("command:" + command);
-
+Debug.Log(command);
         //1レーン分移動したら直進に戻す
         if (command == VoiceToText.VoiceCommand.ひだり)
         {
