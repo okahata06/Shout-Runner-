@@ -2148,7 +2148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c1bfe0deb5f506449291c1a975d58f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 2005534309}
+  text: {fileID: 1420724159}
   characterReactionOBJ: {fileID: 851134220}
 --- !u!114 &1010404844
 MonoBehaviour:
