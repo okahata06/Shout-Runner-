@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows.Speech;
+using UnityEngine.SceneManagement;
 
 //音声認識によって入力単語をテキスト化するスクリプト
 public class VoiceToText : MonoBehaviour
@@ -44,7 +45,7 @@ public class VoiceToText : MonoBehaviour
 
     //認識判定したい単語
     private string[] keywords = new string[]
-    { VoiceCommand.ジャンプ.ToString(),VoiceCommand.伏せ.ToString(),VoiceCommand.なんでやねん.ToString(),
+    { VoiceCommand.スタート.ToString(),VoiceCommand.ジャンプ.ToString(),VoiceCommand.伏せ.ToString(),VoiceCommand.なんでやねん.ToString(),
       VoiceCommand.ひだり.ToString(),VoiceCommand.みぎ.ToString()
     };
     void Start()
@@ -52,15 +53,18 @@ public class VoiceToText : MonoBehaviour
         voiceSetting = GetComponent<VoiceSetting>();
         characterVoiceSettiing = GetComponent<CharacterVoiceSettiing>();
 
-        characterReactionText = characterReactionOBJ.GetComponentInChildren<Text>();
-        text.text = "音声認識待機中";
+        if(characterReactionOBJ!=null)
+        {
+            characterReactionText = characterReactionOBJ.GetComponentInChildren<Text>();
+            text.text = "音声認識待機中";
+            characterReactionOBJ.SetActive(false);
+        }
 
-        characterReactionOBJ.SetActive(false);
         //dictationRecognizer=new DictationRecognizer();
         //dictationRecognizer.DictationResult += DictationRecResult;
         // dictationRecognizer.DictationError += DictationRecError;
         //dictationRecognizer.DictationComplete += DictationRecComplete;
-   
+
         // キーワード認識の初期化
         keywordRecognizer = new KeywordRecognizer(keywords);
         //イベントに登録
@@ -82,8 +86,8 @@ public class VoiceToText : MonoBehaviour
         if (maxVolume < voiceSetting.GetVoiceVolume)
             maxVolume = voiceSetting.GetVoiceVolume;
 
-        if (TextDisplaying==true)
-        {    
+        if (TextDisplaying == true)
+        {
             textdisplayTimeCount += Time.deltaTime;
 
             if (textdisplayTimeCount >= TextDisplayTime)
@@ -96,8 +100,8 @@ public class VoiceToText : MonoBehaviour
 
         TimeCount += Time.deltaTime;
         //失敗リアクションを表示
-        if ( TimeCount >= noSpeakTime                 //時間経過
-            ) 
+        if (TimeCount >= noSpeakTime                 //時間経過
+            )
         {
             SuccessOrFilure(false);
 
@@ -111,8 +115,8 @@ public class VoiceToText : MonoBehaviour
     {
         // Debug.Log($"認識された言葉: {args.text}");
         // Debug.Log($"信頼度: {args.confidence}");
-
-        recognizedText = text.text = args.text;
+        if(recognizedText!=null)
+            recognizedText = text.text = args.text;
 
         //if (minVoiceVolume < voiceSetting.GetVoiceVolume)
         //{
@@ -124,7 +128,7 @@ public class VoiceToText : MonoBehaviour
         TimeCount = 0f; //認識されたのでタイムカウントリセット
 
         // 認識された言葉に応じて処理
-        //動きはPlayerMove.csで実装
+        //プレイヤーの動きはPlayerMove.csで実装
         switch (args.text)
         {
             case nameof(VoiceCommand.ジャンプ) or nameof(VoiceCommand.とべ):
@@ -142,12 +146,18 @@ public class VoiceToText : MonoBehaviour
             case nameof(VoiceCommand.伏せ):
                 Debug.Log("伏せ");
                 break;
+            case nameof(VoiceCommand.スタート):
+                Debug.Log("スタート");
+                ChangeScene();
+                break;
         }
     }
 
     //命令成功失敗リアクション表示
     void SuccessOrFilure(bool isSuccess)
     {
+        if(characterReactionOBJ==null) return;
+
         characterReactionOBJ.SetActive(true);
         TextDisplaying = true;
         if (isSuccess)
@@ -188,6 +198,7 @@ public class VoiceToText : MonoBehaviour
 
     public enum VoiceCommand
     {
+        スタート,
         ジャンプ,
         とべ,
         なんでやねん,
@@ -212,6 +223,9 @@ public class VoiceToText : MonoBehaviour
         聞き取られへんて,
         ちゃんと喋れ,
     }
-
+    void ChangeScene()
+    {
+        SceneManager.LoadScene("Main");
+    }
 
 }
