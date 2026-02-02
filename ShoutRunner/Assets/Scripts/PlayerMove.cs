@@ -79,7 +79,7 @@ public class PlayerMove : MonoBehaviour
         //音声認識なしデバッグ用
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.なんでやねん.ToString();
+            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.すすめ.ToString();
             MoveByText(command.ToString());
             Debug.Log(command.ToString());
         }
@@ -354,7 +354,10 @@ public class PlayerMove : MonoBehaviour
                     rb.velocity += jump_vec;//上昇エネルギー付与
                 }
                 break;
-
+                case nameof(VoiceToText.VoiceCommand.すすめ):
+                command = VoiceToText.VoiceCommand.すすめ;
+                rb.velocity = Vector3.forward * speed;
+                break;
         }
     }
 
