@@ -27,7 +27,7 @@ public class PlayerMove : MonoBehaviour
     bool isCurve = false;
     bool foward = false;
     bool waveEffectPlayed = false;
-    public static bool ismove = true;
+    public static bool ismove = false;
     public static bool isUlt = false;
     string recognizedText;
     Vector3 pos;

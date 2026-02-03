@@ -32,6 +32,8 @@ public class VoiceSetting : MonoBehaviour
 
     void Update()
     {
+        if (!PlayerMove.ismove)
+            return;
         float[] waveData = GetUpdatedAudio();
         if (waveData.Length == 0) return;
         //ボリュームデータ代入0～1

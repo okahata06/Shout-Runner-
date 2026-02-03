@@ -27,7 +27,11 @@ public class CharacterVoiceSettiing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(voiceNumber!=-1)
+        if(!voiceSource.isPlaying)
+        {
+            PlayerMove.ismove = true;
+        }
+        if(voiceNumber!=-1&&PlayerMove.ismove)
         {
             voiceSource.clip=voiceClip[voiceNumber];
             voiceSource.Play();
