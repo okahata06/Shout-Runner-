@@ -22,6 +22,7 @@ public class PlayerMove : MonoBehaviour
     float time = 0;
     float crawlTime = 2.5f;
     float RotateSpeed = 170f;
+    float centerX;
     bool isJump = false;
     bool isCurve = false;
     bool foward = false;
@@ -52,6 +53,7 @@ public class PlayerMove : MonoBehaviour
         colliderSize = boxCol.size;
         colliderPos = boxCol.center;
         pos = tr.position;
+        centerX = pos.x;
         forward_rot = tr.eulerAngles;
         left_rot = new Vector3(forward_rot.x, forward_rot.y - 45, forward_rot.z);
         right_rot = new Vector3(forward_rot.x, forward_rot.y + 45, forward_rot.z);
@@ -77,32 +79,32 @@ public class PlayerMove : MonoBehaviour
         RotateSpeed = speed * 40f;
 
         //音声認識なしデバッグ用
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.すすめ.ToString();
-            MoveByText(command.ToString());
-            Debug.Log(command.ToString());
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ひだり.ToString();
-            MoveByText(command.ToString());
-        }
-        else if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.みぎ.ToString();
-            MoveByText(command.ToString());
-        }
-        else if(Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ジャンプ.ToString();
-            MoveByText(command.ToString());
-        }
-        else if(Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.伏せ.ToString();
-            MoveByText(command.ToString());
-        }
+        /*    if (Input.GetKeyDown(KeyCode.Space))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.すすめ.ToString();
+                MoveByText(command.ToString());
+                Debug.Log(command.ToString());
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ひだり.ToString();
+                MoveByText(command.ToString());
+            }
+            else if(Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.みぎ.ToString();
+                MoveByText(command.ToString());
+            }
+            else if(Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ジャンプ.ToString();
+                MoveByText(command.ToString());
+            }
+            else if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.伏せ.ToString();
+                MoveByText(command.ToString());
+            }*/
 
         // 音声認識で取得したテキストが変化してたら処理
         if (recognizedText != voiceToText.GetSetRecognizedText)
@@ -132,6 +134,7 @@ public class PlayerMove : MonoBehaviour
 
         }
 
+        Debug.Log(command);
 
         //1レーン分移動したら直進に戻す
         if (command == VoiceToText.VoiceCommand.ひだり)
@@ -141,7 +144,8 @@ public class PlayerMove : MonoBehaviour
             {
                 isCurve = false;
                 rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x - 3, tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX - 3, tr.position.y, tr.position.z);
+                pos = tr.position;
                 command = VoiceToText.VoiceCommand.Null;
                 Debug.Log(command);
             }
@@ -149,13 +153,14 @@ public class PlayerMove : MonoBehaviour
             else if (rean == Rean.Center)
             {
                 isCurve = true;
-                if (tr.position.x <= pos.x - 3)
+                if (tr.position.x <= pos.x - 2.85f && foward)
                 {
                     isCurve = false;
                     rean = Rean.Left;
                     rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x - 3, tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX - 3, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
+                    pos = tr.position;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -165,14 +170,18 @@ public class PlayerMove : MonoBehaviour
             //右端
             else if (rean == Rean.Right)
             {
+                Debug.Log("tr.position.x:" + tr.position.x+ "\npos.x:"+pos.x );
+                Debug.Log(tr.position.x <= pos.x - 3);
                 isCurve = true;
-                if (tr.position.x <= pos.x - 3)
+
+                if (tr.position.x <= pos.x - 2.85f && foward)
                 {
                     isCurve = false;
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x , tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX , tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
+                    pos = tr.position;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -188,13 +197,14 @@ public class PlayerMove : MonoBehaviour
             {
 
                 isCurve = true;
-                if (tr.position.x >= pos.x + 3)
+                if (tr.position.x >= pos.x + 2.85f && foward)
                 {
                     isCurve = false;
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x , tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
+                    pos = tr.position;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -206,15 +216,16 @@ public class PlayerMove : MonoBehaviour
             {
 
                 isCurve = true;
-                if (tr.position.x >= pos.x + 3)
+                if (tr.position.x >= pos.x + 2.85f&& foward)
                 {
                     isCurve = false;
                     Debug.Log(isCurve);
 
                     rean = Rean.Right;
                     rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x +3, tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX + 3, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
+                    pos = tr.position;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -226,9 +237,10 @@ public class PlayerMove : MonoBehaviour
             {
                     isCurve = false;
                 rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x +3, tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX + 3, tr.position.y, tr.position.z);
+                pos = tr.position;
                 command = VoiceToText.VoiceCommand.Null;
-                Debug.Log(command);
+ Debug.Log(command);
 
             }
         }
@@ -311,11 +323,7 @@ public class PlayerMove : MonoBehaviour
     //移動
     void MoveByText(string text)
     {
-        //移動処理をしていない状態=Null
-        if (command != VoiceToText.VoiceCommand.Null)
-            return;
 
-        //pos = tr.position;
         //方向転換など
         switch (text)
         {
