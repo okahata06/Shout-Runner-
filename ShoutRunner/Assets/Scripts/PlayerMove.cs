@@ -368,7 +368,7 @@ public class PlayerMove : MonoBehaviour
                 }
                 break;
                 case nameof(VoiceToText.VoiceCommand.‚·‚·‚ß):
-                command = VoiceToText.VoiceCommand.‚·‚·‚ß;
+                //command = VoiceToText.VoiceCommand.‚·‚·‚ß;
                 rb.velocity = Vector3.forward * speed;
                 break;
         }
