@@ -44,6 +44,8 @@ public class StageTips : MonoBehaviour
         currentTipIndex = startTipIndex - 1;
         UpdateStage(preInstantiate);
 
+        playerScore = 0;
+
         //VoiceSettingスクリプトがついたオブジェクトを取得
         voice_setting = FindFirstObjectByType<VoiceSetting>();
 
