@@ -32,7 +32,18 @@ public class Result : MonoBehaviour
     [Header("ランキング")]
     public GameObject Ranking;
 
+    [Header("タイトル遷移用テキストオブジェクト")]
+    public GameObject ShoutTitle;
+
     RankingManager ranking;
+
+    private AudioSource audiosourse;
+    [Header("太鼓1SE")]
+    public AudioClip taiko1;
+    [Header("太鼓2SE")]
+    public AudioClip taiko2;
+    [Header("SE")]
+    public AudioClip startSE;
 
     KeywordRecognizer keywordRecognizer;
 
@@ -45,6 +56,10 @@ public class Result : MonoBehaviour
 
     private void Awake()
     {
+        IrisPanel.SetActive(false);
+        Ranking.SetActive(false);
+        ShoutTitle.SetActive(false);
+        audiosourse = GetComponent<AudioSource>();
         ranking = FindFirstObjectByType<RankingManager>();
 
         //IrisPanel.SetActive(false);
@@ -53,8 +68,9 @@ public class Result : MonoBehaviour
 
     private void Start()
     {
-        IrisPanel.SetActive(false);
-        Ranking.SetActive(false);
+        //IrisPanel.SetActive(false);
+        //Ranking.SetActive(false);
+        //ShoutTitle.SetActive(false);
     }
 
     private void OnEnable()
@@ -122,14 +138,17 @@ public class Result : MonoBehaviour
         total = Mathf.Round(StageTips.playerScore * scoreMultiplier);
         ranking.AddScore((int)total);
 
+        audiosourse.PlayOneShot(taiko1);
         ScoreText.text = StageTips.playerScore.ToString();
 
         yield return new WaitForSeconds(2);
 
+        audiosourse.PlayOneShot(taiko1);
         VolumeText.text = "×"　+ scoreMultiplier.ToString();
 
         yield return new WaitForSeconds(2);
 
+        audiosourse.PlayOneShot(taiko2);
         TotalText.text = total.ToString();
 
         yield return new WaitForSeconds(3);
@@ -138,11 +157,13 @@ public class Result : MonoBehaviour
 
         yield return new WaitForSeconds(3);
 
+        ShoutTitle.SetActive(true);
         _returnTitle = true;
     }
 
     private IEnumerator MainTitle()
     {
+        audiosourse.PlayOneShot(startSE);
         IrisPanel.SetActive(true);
         IrisOut();
         yield return new WaitForSeconds(1f);

@@ -25,10 +25,13 @@ public class PlayerHealth : MonoBehaviour
     public static int currentHealth;
     BoxCollider boxCol;
     Animator anim;
-
+    [Header("HitSE")]
+    public AudioClip hit;
+    private AudioSource audiosourse;
     // Start is called before the first frame update
     void Start()
     {
+        audiosourse = GetComponent<AudioSource>();
         Result.SetActive(false);
         currentHealth = maxHP;
         boxCol = GetComponent<BoxCollider>();
@@ -70,10 +73,10 @@ public class PlayerHealth : MonoBehaviour
     
     private void OnTriggerEnter(Collider col)
     {
-
         if(col.gameObject.CompareTag(TrapType.Box.ToString()) ||
             col.gameObject.CompareTag(TrapType.Trap.ToString()))
         {
+            audiosourse.PlayOneShot(hit);
             currentHealth--;
             anim.SetInteger("HP", currentHealth);
             Debug.Log("Player HP: " + currentHealth);

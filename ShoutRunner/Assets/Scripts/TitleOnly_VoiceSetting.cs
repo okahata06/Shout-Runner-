@@ -13,8 +13,6 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
     [SerializeField] GameObject IrisPanel;
     [SerializeField] RectTransform unmask;
 
-    private AudioSource audiosourse;
-
     private bool _sceneChange = true;//コルーチンを1度だけ処理する用
 
     readonly Vector2 IRIS_MID_SCALE1 = new Vector2(1.0f, 1.0f);
@@ -22,6 +20,7 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
 
     KeywordRecognizer keywordRecognizer;
 
+    private AudioSource audiosourse;
     [Header("SE")]
     public AudioClip startSE;
 
