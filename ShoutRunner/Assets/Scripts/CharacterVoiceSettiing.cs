@@ -22,6 +22,7 @@ public class CharacterVoiceSettiing : MonoBehaviour
         voiceSource.Play();
 
         voiceNumber = -1;
+        PlayerMove.ismove = false;
     }
 
     // Update is called once per frame
