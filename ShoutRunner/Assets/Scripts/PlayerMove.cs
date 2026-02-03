@@ -79,32 +79,32 @@ public class PlayerMove : MonoBehaviour
         RotateSpeed = speed * 40f;
 
         //音声認識なしデバッグ用
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.すすめ.ToString();
-            MoveByText(command.ToString());
-            Debug.Log(command.ToString());
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ひだり.ToString();
-            MoveByText(command.ToString());
-        }
-        else if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.みぎ.ToString();
-            MoveByText(command.ToString());
-        }
-        else if(Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ジャンプ.ToString();
-            MoveByText(command.ToString());
-        }
-        else if(Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.伏せ.ToString();
-            MoveByText(command.ToString());
-        }
+        /*    if (Input.GetKeyDown(KeyCode.Space))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.すすめ.ToString();
+                MoveByText(command.ToString());
+                Debug.Log(command.ToString());
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ひだり.ToString();
+                MoveByText(command.ToString());
+            }
+            else if(Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.みぎ.ToString();
+                MoveByText(command.ToString());
+            }
+            else if(Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.ジャンプ.ToString();
+                MoveByText(command.ToString());
+            }
+            else if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                voiceToText.GetSetRecognizedText = VoiceToText.VoiceCommand.伏せ.ToString();
+                MoveByText(command.ToString());
+            }*/
 
         // 音声認識で取得したテキストが変化してたら処理
         if (recognizedText != voiceToText.GetSetRecognizedText)
@@ -134,6 +134,7 @@ public class PlayerMove : MonoBehaviour
 
         }
 
+        Debug.Log(command);
 
         //1レーン分移動したら直進に戻す
         if (command == VoiceToText.VoiceCommand.ひだり)
@@ -152,7 +153,7 @@ public class PlayerMove : MonoBehaviour
             else if (rean == Rean.Center)
             {
                 isCurve = true;
-                if (tr.position.x <= pos.x - 3)
+                if (tr.position.x <= pos.x - 2.85f && foward)
                 {
                     isCurve = false;
                     rean = Rean.Left;
@@ -169,8 +170,11 @@ public class PlayerMove : MonoBehaviour
             //右端
             else if (rean == Rean.Right)
             {
+                Debug.Log("tr.position.x:" + tr.position.x+ "\npos.x:"+pos.x );
+                Debug.Log(tr.position.x <= pos.x - 3);
                 isCurve = true;
-                if (tr.position.x <= pos.x - 3)
+
+                if (tr.position.x <= pos.x - 2.85f && foward)
                 {
                     isCurve = false;
                     rean = Rean.Center;
@@ -193,7 +197,7 @@ public class PlayerMove : MonoBehaviour
             {
 
                 isCurve = true;
-                if (tr.position.x >= pos.x + 3)
+                if (tr.position.x >= pos.x + 2.85f && foward)
                 {
                     isCurve = false;
                     rean = Rean.Center;
@@ -212,7 +216,7 @@ public class PlayerMove : MonoBehaviour
             {
 
                 isCurve = true;
-                if (tr.position.x >= pos.x + 3)
+                if (tr.position.x >= pos.x + 2.85f&& foward)
                 {
                     isCurve = false;
                     Debug.Log(isCurve);
@@ -236,7 +240,6 @@ public class PlayerMove : MonoBehaviour
                 tr.position = new Vector3(centerX + 3, tr.position.y, tr.position.z);
                 pos = tr.position;
                 command = VoiceToText.VoiceCommand.Null;
-                       pos = tr.position;
  Debug.Log(command);
 
             }
@@ -320,9 +323,6 @@ public class PlayerMove : MonoBehaviour
     //移動
     void MoveByText(string text)
     {
-        //移動処理をしていない状態=Null
-        if (command != VoiceToText.VoiceCommand.Null)
-            return;
 
         //方向転換など
         switch (text)
