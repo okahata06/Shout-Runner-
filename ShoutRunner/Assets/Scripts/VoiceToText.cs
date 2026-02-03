@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows.Speech;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 //音声認識によって入力単語をテキスト化するスクリプト
 public class VoiceToText : MonoBehaviour
@@ -59,7 +60,6 @@ public class VoiceToText : MonoBehaviour
             text.text = "音声認識待機中";
             characterReactionOBJ.SetActive(false);
         }
-
         //dictationRecognizer=new DictationRecognizer();
         //dictationRecognizer.DictationResult += DictationRecResult;
         // dictationRecognizer.DictationError += DictationRecError;
@@ -82,6 +82,11 @@ public class VoiceToText : MonoBehaviour
     void Update()
     {
         //Debug.Log("音声入力音量:" + voiceSetting.GetVoiceVolume);
+        if (PlayerHealth.currentHealth <= 0)
+        {
+           Invoke("ThisDestroy", 1.0f);
+            return;
+        }
 
         if (maxVolume < voiceSetting.GetVoiceVolume)
             maxVolume = voiceSetting.GetVoiceVolume;
@@ -177,6 +182,10 @@ public class VoiceToText : MonoBehaviour
         }
     }
 
+    void ThisDestroy()
+    {
+            Destroy(this);
+    }
 
     public string GetSetRecognizedText
     {

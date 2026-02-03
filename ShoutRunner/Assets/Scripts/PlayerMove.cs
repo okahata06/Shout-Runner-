@@ -70,10 +70,10 @@ public class PlayerMove : MonoBehaviour
         //時間経過による速度変化
         speed += 0.04f * Time.deltaTime;
 
-        if(foward==true&&!isCurve)
-        {
-                rb.velocity = Vector3.forward * speed;
-        }
+        //if(foward==true&&!isCurve)
+        //{
+        //        rb.velocity = Vector3.forward * speed;
+        //}
 
         //移動速度による回転速度の調整
         RotateSpeed = speed * 40f;
@@ -107,7 +107,7 @@ public class PlayerMove : MonoBehaviour
             }*/
 
         // 音声認識で取得したテキストが変化してたら処理
-        if (recognizedText != voiceToText.GetSetRecognizedText)
+        if (recognizedText != voiceToText.GetSetRecognizedText&& command == VoiceToText.VoiceCommand.Null)
         {
             MoveByText(recognizedText);
             recognizedText = voiceToText.GetSetRecognizedText;
@@ -146,6 +146,7 @@ public class PlayerMove : MonoBehaviour
                 rb.velocity = Vector3.forward * speed;
                 tr.position = new Vector3(centerX - 3, tr.position.y, tr.position.z);
                 pos = tr.position;
+                rb.velocity = Vector3.forward * speed;
                 command = VoiceToText.VoiceCommand.Null;
                 Debug.Log(command);
             }
@@ -153,7 +154,7 @@ public class PlayerMove : MonoBehaviour
             else if (rean == Rean.Center)
             {
                 isCurve = true;
-                if (tr.position.x <= pos.x - 2.85f && foward)
+                if (tr.position.x <= pos.x - 3f && foward)
                 {
                     isCurve = false;
                     rean = Rean.Left;
@@ -161,6 +162,7 @@ public class PlayerMove : MonoBehaviour
                 tr.position = new Vector3(centerX - 3, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
                     pos = tr.position;
+                    rb.velocity = Vector3.forward * speed;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -174,7 +176,7 @@ public class PlayerMove : MonoBehaviour
                 Debug.Log(tr.position.x <= pos.x - 3);
                 isCurve = true;
 
-                if (tr.position.x <= pos.x - 2.85f && foward)
+                if (tr.position.x <= pos.x - 3f && foward)
                 {
                     isCurve = false;
                     rean = Rean.Center;
@@ -182,6 +184,7 @@ public class PlayerMove : MonoBehaviour
                 tr.position = new Vector3(centerX , tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
                     pos = tr.position;
+                    rb.velocity = Vector3.forward * speed;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -197,7 +200,7 @@ public class PlayerMove : MonoBehaviour
             {
 
                 isCurve = true;
-                if (tr.position.x >= pos.x + 2.85f && foward)
+                if (tr.position.x >= pos.x + 3f && foward)
                 {
                     isCurve = false;
                     rean = Rean.Center;
@@ -205,6 +208,7 @@ public class PlayerMove : MonoBehaviour
                 tr.position = new Vector3(centerX, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
                     pos = tr.position;
+                    rb.velocity = Vector3.forward * speed;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -216,7 +220,7 @@ public class PlayerMove : MonoBehaviour
             {
 
                 isCurve = true;
-                if (tr.position.x >= pos.x + 2.85f&& foward)
+                if (tr.position.x >= pos.x + 3f&& foward)
                 {
                     isCurve = false;
                     Debug.Log(isCurve);
@@ -226,6 +230,7 @@ public class PlayerMove : MonoBehaviour
                 tr.position = new Vector3(centerX + 3, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
                     pos = tr.position;
+                    rb.velocity = Vector3.forward * speed;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -239,11 +244,11 @@ public class PlayerMove : MonoBehaviour
                 rb.velocity = Vector3.forward * speed;
                 tr.position = new Vector3(centerX + 3, tr.position.y, tr.position.z);
                 pos = tr.position;
+                rb.velocity = Vector3.forward * speed;
                 command = VoiceToText.VoiceCommand.Null;
- Debug.Log(command);
 
             }
-        }
+       }
 
         //叫び
         if (anim.GetBool(animationState.Scream.ToString()))
@@ -409,7 +414,6 @@ public class PlayerMove : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
             }
-        Debug.Log("velocityddd" + rb.velocity);
 
 
     }
