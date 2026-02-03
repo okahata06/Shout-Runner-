@@ -22,6 +22,7 @@ public class PlayerMove : MonoBehaviour
     float time = 0;
     float crawlTime = 2.5f;
     float RotateSpeed = 170f;
+    float centerX;
     bool isJump = false;
     bool isCurve = false;
     bool foward = false;
@@ -52,6 +53,7 @@ public class PlayerMove : MonoBehaviour
         colliderSize = boxCol.size;
         colliderPos = boxCol.center;
         pos = tr.position;
+        centerX = pos.x;
         forward_rot = tr.eulerAngles;
         left_rot = new Vector3(forward_rot.x, forward_rot.y - 45, forward_rot.z);
         right_rot = new Vector3(forward_rot.x, forward_rot.y + 45, forward_rot.z);
@@ -141,7 +143,8 @@ public class PlayerMove : MonoBehaviour
             {
                 isCurve = false;
                 rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x - 3, tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX - 3, tr.position.y, tr.position.z);
+                pos = tr.position;
                 command = VoiceToText.VoiceCommand.Null;
                 Debug.Log(command);
             }
@@ -154,8 +157,9 @@ public class PlayerMove : MonoBehaviour
                     isCurve = false;
                     rean = Rean.Left;
                     rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x - 3, tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX - 3, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
+                    pos = tr.position;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -171,8 +175,9 @@ public class PlayerMove : MonoBehaviour
                     isCurve = false;
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x , tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX , tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
+                    pos = tr.position;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -193,8 +198,9 @@ public class PlayerMove : MonoBehaviour
                     isCurve = false;
                     rean = Rean.Center;
                     rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x , tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
+                    pos = tr.position;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -213,8 +219,9 @@ public class PlayerMove : MonoBehaviour
 
                     rean = Rean.Right;
                     rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x +3, tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX + 3, tr.position.y, tr.position.z);
                     tr.rotation = Quaternion.Euler(forward_rot);
+                    pos = tr.position;
                     command = VoiceToText.VoiceCommand.Null;
                     foward = false;
                     time = 0;
@@ -226,9 +233,11 @@ public class PlayerMove : MonoBehaviour
             {
                     isCurve = false;
                 rb.velocity = Vector3.forward * speed;
-                tr.position = new Vector3(pos.x +3, tr.position.y, tr.position.z);
+                tr.position = new Vector3(centerX + 3, tr.position.y, tr.position.z);
+                pos = tr.position;
                 command = VoiceToText.VoiceCommand.Null;
-                Debug.Log(command);
+                       pos = tr.position;
+ Debug.Log(command);
 
             }
         }
@@ -315,7 +324,6 @@ public class PlayerMove : MonoBehaviour
         if (command != VoiceToText.VoiceCommand.Null)
             return;
 
-        //pos = tr.position;
         //•ûŒü“]Š·‚È‚Ç
         switch (text)
         {
