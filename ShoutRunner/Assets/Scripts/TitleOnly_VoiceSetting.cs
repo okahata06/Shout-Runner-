@@ -13,12 +13,17 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
     [SerializeField] GameObject IrisPanel;
     [SerializeField] RectTransform unmask;
 
+    private AudioSource audiosourse;
+
     private bool _sceneChange = true;//コルーチンを1度だけ処理する用
 
     readonly Vector2 IRIS_MID_SCALE1 = new Vector2(1.0f, 1.0f);
     readonly Vector2 IRIS_MID_SCALE2 = new Vector2(3.0f, 3.0f);
 
     KeywordRecognizer keywordRecognizer;
+
+    [Header("SE")]
+    public AudioClip startSE;
 
     string recognizedText = "";
 
@@ -29,6 +34,8 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
 
     void Start()
     {
+        audiosourse = GetComponent<AudioSource>();
+
         // キーワード認識の初期化
         keywordRecognizer = new KeywordRecognizer(keywords);
         //イベントに登録
@@ -51,10 +58,11 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
         // Debug.Log($"信頼度: {args.confidence}");
 
         // 認識された言葉に応じて処理
-        if(args.text==nameof(VoiceCommand.スタート))
+        if(args.text==nameof(VoiceCommand.スタート) && _sceneChange)
         {
             Debug.Log("スタート");
             StartCoroutine(TitleSelect());
+            _sceneChange = false;
         }
 
     }
@@ -89,6 +97,7 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
 
     private IEnumerator TitleSelect()
     {
+        audiosourse.PlayOneShot(startSE);
         IrisPanel.SetActive(true);
         IrisOut();
         yield return new WaitForSeconds(1f);
