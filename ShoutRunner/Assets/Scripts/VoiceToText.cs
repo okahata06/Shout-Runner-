@@ -25,7 +25,7 @@ public class VoiceToText : MonoBehaviour
     float TextDisplayTime = 1.3f;
     float textdisplayTimeCount = 0f;
     float TimeCount = 2f;
-    float noSpeakTime = 3.5f;
+    float noSpeakTime = 4.5f;
     bool TextDisplaying = false;
     bool isSpeaking = false;
 
@@ -82,6 +82,8 @@ public class VoiceToText : MonoBehaviour
     void Update()
     {
         //Debug.Log("音声入力音量:" + voiceSetting.GetVoiceVolume);
+        if (!PlayerMove.ismove)
+            return;
         if (PlayerHealth.currentHealth <= 0)
         {
            Invoke("ThisDestroy", 1.0f);
@@ -118,9 +120,10 @@ public class VoiceToText : MonoBehaviour
     //音声入力があったと判定されたときに呼ばれる　　　　　　　認識された音声データ
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
-        // Debug.Log($"認識された言葉: {args.text}");
+        if (!PlayerMove.ismove)
+            return;   // Debug.Log($"認識された言葉: {args.text}");
         // Debug.Log($"信頼度: {args.confidence}");
-        if(recognizedText!=null)
+        if (recognizedText!=null)
             recognizedText = text.text = args.text;
 
         //if (minVoiceVolume < voiceSetting.GetVoiceVolume)
