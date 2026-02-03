@@ -107,7 +107,7 @@ public class PlayerMove : MonoBehaviour
             }*/
 
         // 音声認識で取得したテキストが変化してたら処理
-        if (recognizedText != voiceToText.GetSetRecognizedText)
+        if (recognizedText != voiceToText.GetSetRecognizedText&& command == VoiceToText.VoiceCommand.Null)
         {
             MoveByText(recognizedText);
             recognizedText = voiceToText.GetSetRecognizedText;
@@ -246,10 +246,9 @@ public class PlayerMove : MonoBehaviour
                 pos = tr.position;
                 rb.velocity = Vector3.forward * speed;
                 command = VoiceToText.VoiceCommand.Null;
- Debug.Log(command);
 
             }
-        }
+       }
 
         //叫び
         if (anim.GetBool(animationState.Scream.ToString()))
@@ -415,7 +414,6 @@ public class PlayerMove : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
             }
-        Debug.Log("velocityddd" + rb.velocity);
 
 
     }
