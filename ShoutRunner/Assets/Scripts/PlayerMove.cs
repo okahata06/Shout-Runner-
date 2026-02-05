@@ -404,7 +404,7 @@ public class PlayerMove : MonoBehaviour
     void JumpMove()
     {
                 //ƒWƒƒƒ“ƒv’†‚Ìˆ—
-            rb.velocity -= new Vector3(0, speedDecay * Time.deltaTime, 0);
+            rb.velocity -= new Vector3(0, (speedDecay +speed/10)* Time.deltaTime, 0);
             if (tr.position.y < pos.y)
             {
                 isJump = false;
