@@ -25,6 +25,7 @@ public class UltGauge : MonoBehaviour
     void Start()
     {
         UltGaugeImage.fillAmount = 0;
+        UltGaugeImage.color = new Color(1f, 1f, 1f, 0.5f);
 
         // キーワード認識の初期化
         keywordRecognizer = new KeywordRecognizer(keywords);
@@ -48,15 +49,24 @@ public class UltGauge : MonoBehaviour
         }
 
         ultGauge = UltGaugeImage.fillAmount;
+      
+        // ゲージが満タンになったら色を変える
+        if (UltGaugeImage.fillAmount == 1f)
+        {
+            UltGaugeImage.color = new Color(0.9f, 0.9f, 0.2f, 0.5f);
+        }
+        else
+        {
+            UltGaugeImage.color = new Color(1f, 1f, 1f, 0.5f);
+        }
+
 
         //Debug.Log(ultGauge);
     }
 
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
-        // Debug.Log($"認識された言葉: {args.text}");
-        // Debug.Log($"信頼度: {args.confidence}");
-
+        
         // 認識された言葉に応じて処理
         if (args.text == nameof(VoiceCommand.まつお) && UltGaugeImage.fillAmount < 1.0)
         {
