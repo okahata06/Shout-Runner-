@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3837b430174bb4693518e6f095758a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyVolume: 0.3
+  destroyVolume: 0.5
   woodEffectPrefab: {fileID: 8324863292140059677, guid: eb6a56f8b6aef904e8b16f6148552858, type: 3}
   dustEffectPrefab: {fileID: 7809182310449700484, guid: b1adf1c5a04e84c4e824c27b5e506842, type: 3}
   ShoutLogo: {fileID: 5755918999888181610}
@@ -1568,7 +1568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3837b430174bb4693518e6f095758a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyVolume: 0.3
+  destroyVolume: 0.5
   woodEffectPrefab: {fileID: 8324863292140059677, guid: eb6a56f8b6aef904e8b16f6148552858, type: 3}
   dustEffectPrefab: {fileID: 7809182310449700484, guid: b1adf1c5a04e84c4e824c27b5e506842, type: 3}
   ShoutLogo: {fileID: 5755918999888181610}
@@ -1795,7 +1795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3837b430174bb4693518e6f095758a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyVolume: 0.3
+  destroyVolume: 0.5
   woodEffectPrefab: {fileID: 8324863292140059677, guid: eb6a56f8b6aef904e8b16f6148552858, type: 3}
   dustEffectPrefab: {fileID: 7809182310449700484, guid: b1adf1c5a04e84c4e824c27b5e506842, type: 3}
   ShoutLogo: {fileID: 5755918999888181610}

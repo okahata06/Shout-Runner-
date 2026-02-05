@@ -16,6 +16,8 @@ public class Box : MonoBehaviour
     [Header("ã©Ç◊ÉçÉS")]
     public GameObject ShoutLogo;
 
+    public static bool seOnce;
+
     private Transform Target;
 
     // Start is called before the first frame update
@@ -49,6 +51,8 @@ public class Box : MonoBehaviour
 
         if (dustEffectPrefab != null)
             Instantiate(dustEffectPrefab, transform.position, Quaternion.identity);
+
+        seOnce = true;
 
         Destroy(gameObject);
     }

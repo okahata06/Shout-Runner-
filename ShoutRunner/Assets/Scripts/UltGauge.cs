@@ -10,6 +10,12 @@ public class UltGauge : MonoBehaviour
     [Header("ウルトゲージのイメージ")]
     [SerializeField] Image UltGaugeImage;
 
+    private AudioSource audiosourse;
+    [Header("SE")]
+    public AudioClip gaugeMax;
+
+    private bool seOnce = true;
+
     KeywordRecognizer keywordRecognizer;
 
     string recognizedText = "";
@@ -24,6 +30,8 @@ public class UltGauge : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audiosourse = GetComponent<AudioSource>();
+
         UltGaugeImage.fillAmount = 0;
         UltGaugeImage.color = new Color(1f, 1f, 1f, 0.5f);
 
@@ -46,6 +54,7 @@ public class UltGauge : MonoBehaviour
         {
             UltGaugeImage.fillAmount = 0;
             PlayerMove.isUlt = false;
+            seOnce = true;
         }
 
         ultGauge = UltGaugeImage.fillAmount;
@@ -53,6 +62,12 @@ public class UltGauge : MonoBehaviour
         // ゲージが満タンになったら色を変える
         if (UltGaugeImage.fillAmount == 1f)
         {
+            if (seOnce)
+            {
+                audiosourse.PlayOneShot(gaugeMax);
+                seOnce = false;
+            }
+
             UltGaugeImage.color = new Color(0.9f, 0.9f, 0.2f, 0.5f);
         }
         else

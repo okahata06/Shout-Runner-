@@ -36,10 +36,21 @@ public class StageTips : MonoBehaviour
     [Header("スコアのテキスト")]
     public Text ScoreText;
 
+    [Header("Bossのテキスト")]
+    public GameObject BossText;
+
+    private AudioSource audiosourse;
+    [Header("SE")]
+    public AudioClip destroyBox;
+
     private VoiceSetting voice_setting;//VoiceSettingスクリプト取得用
 
     void Start()
     {
+        audiosourse=GetComponent<AudioSource>();
+
+        BossText.SetActive(true);
+
         //初期化処理
         currentTipIndex = startTipIndex - 1;
         UpdateStage(preInstantiate);
@@ -55,6 +66,17 @@ public class StageTips : MonoBehaviour
 
     void Update()
     {
+        if (Box.seOnce)
+        {
+            audiosourse.PlayOneShot(destroyBox);
+            Box.seOnce = false;
+        }
+
+        if (PlayerMove.ismove)
+        {
+            BossText.SetActive(false);
+        }
+
         //キャラクターの位置から現在のステージチップのインデックスを計算
         int charaPositionIndex = (int)(character.position.z / StageTipSize);
         //次のステージチップに入ったらステージの更新処理を行う
