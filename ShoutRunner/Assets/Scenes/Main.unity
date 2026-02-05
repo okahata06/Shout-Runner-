@@ -283,7 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distancePerScore: 0.1
-  mustScore: 200
+  mustScore: 3000
   character: {fileID: 1010404848}
   stageTips:
   - {fileID: 1989576033079712494, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
