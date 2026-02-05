@@ -68,7 +68,7 @@ public class PlayerMove : MonoBehaviour
             return;
         }
         //時間経過による速度変化
-        speed += 0.04f * Time.deltaTime;
+        //speed += 0.04f * Time.deltaTime;
 
         //if(foward==true&&!isCurve)
         //{
@@ -401,21 +401,37 @@ public class PlayerMove : MonoBehaviour
 
     }
 
+    //void JumpMove()
+    //{
+    //            //ジャンプ中の処理
+    //        rb.velocity -= new Vector3(0, speedDecay * Time.deltaTime, 0);
+    //        if (tr.position.y < pos.y)
+    //        {
+    //            isJump = false;
+    //            command = VoiceToText.VoiceCommand.Null;
+    //            // Debug.Log("isJump=false");
+
+    //            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+    //            tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
+    //        }
+
+
+    //}
+
     void JumpMove()
     {
-                //ジャンプ中の処理
-            rb.velocity -= new Vector3(0, speedDecay * Time.deltaTime, 0);
-            if (tr.position.y < pos.y)
-            {
-                isJump = false;
-                command = VoiceToText.VoiceCommand.Null;
-                // Debug.Log("isJump=false");
+        float gravityScale = rb.velocity.y > 0 ? 1.0f : 4.5f;
 
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
-            }
+        rb.velocity -= new Vector3(0, speedDecay * gravityScale * Time.deltaTime, 0);
 
+        if (tr.position.y < pos.y)
+        {
+            isJump = false;
+            command = VoiceToText.VoiceCommand.Null;
 
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            tr.position = new Vector3(tr.position.x, pos.y, tr.position.z);
+        }
     }
 
     enum animationState

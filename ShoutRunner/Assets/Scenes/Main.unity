@@ -283,7 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distancePerScore: 0.1
-  mustScore: 1000
+  mustScore: 200
   character: {fileID: 1010404848}
   stageTips:
   - {fileID: 1989576033079712494, guid: 7026f71173a6d884ba35583125e7b90e, type: 3}
@@ -298,12 +298,19 @@ MonoBehaviour:
   - {fileID: 4806252317260098150, guid: 5c2846796aaeec840aec43ab142bb641, type: 3}
   - {fileID: 4089521928854975379, guid: 225f4a0a44732634b94707b42df76db6, type: 3}
   - {fileID: 4884282698867162812, guid: 73c994c84d41ed247b3af917f1d13099, type: 3}
+  - {fileID: 3732301047454801263, guid: 466196fdf0de64a4c92ee422ec50478f, type: 3}
+  - {fileID: 1521754663178061305, guid: 49e9faa78a6fd124b82142f18ba00941, type: 3}
   darkstageTips:
   - {fileID: 6473495054694111069, guid: 58bf6a47596f13f42b52ddd4f930f1aa, type: 3}
   - {fileID: 7046941304367584028, guid: c3f69f55b052b2748a1416471031782e, type: 3}
   - {fileID: 7221772041636662072, guid: 444950b754057de40810a911baf336b8, type: 3}
   - {fileID: 3496576527665304090, guid: 6f250c7e35c3be74cbf60f5f26a9e422, type: 3}
   - {fileID: 313784202221309882, guid: df696b05e171dd84b973b6799a5f5f96, type: 3}
+  - {fileID: 798689246852315435, guid: 7907e0ce6be4d12408b3b8f2c365c5be, type: 3}
+  - {fileID: 1175092442288852020, guid: 9440e0b43f3e2ff4d9b434f7f4fc8cec, type: 3}
+  - {fileID: 1980491203857142310, guid: 4ffdc82995b131743829bf36bd953d4e, type: 3}
+  - {fileID: 3670307390563915069, guid: fa080cf61d7e03f45a27341a880690c9, type: 3}
+  - {fileID: 5574725534194329862, guid: f8ee8f8292036ad4e9aa50f3110f0457, type: 3}
   startTipIndex: 1
   preInstantiate: 3
   generatedStageList: []
@@ -2387,6 +2394,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8cf4754c0f903b64aac50ae2d5d1c31c, type: 3}
   - {fileID: 8300000, guid: 781ac5b5585e2d04fa13fbf0b808ef3b, type: 3}
   - {fileID: 8300000, guid: 2775a9c796f53244d80fe27c1c53be07, type: 3}
+  - {fileID: 8300000, guid: 61f3b34e9d2d92b439d57f9a2e5f7452, type: 3}
+  - {fileID: 8300000, guid: a5a24eac14010b149b56117f5d8a551b, type: 3}
+  - {fileID: 8300000, guid: 50b6054dc583d1a4982993a9b763f7e1, type: 3}
 --- !u!82 &1010404840
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2516,7 +2526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  jump_vec: {x: 0, y: 3.5, z: 0}
+  jump_vec: {x: 0, y: 3.25, z: 0}
   waveEffect: {fileID: 8074301774684205567, guid: 3554f97ae0e08cc43942d9499f8c63f3, type: 3}
 --- !u!114 &1010404843
 MonoBehaviour:

@@ -13,6 +13,9 @@ public class Box : MonoBehaviour
     public GameObject woodEffectPrefab;
     public GameObject dustEffectPrefab;
 
+    [Header("‹©‚×ƒƒS")]
+    public GameObject ShoutLogo;
+
     private Transform Target;
 
     // Start is called before the first frame update
@@ -28,7 +31,11 @@ public class Box : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (voice_setting != null && voice_setting.GetVoiceVolume >= destroyVolume && this.transform.position.z - Target.position.z <= 6)
+        if(this.transform.position.z - Target.position.z <= 9)
+        {
+            ShoutLogo.SetActive(true);
+        }
+        if (voice_setting != null && voice_setting.GetVoiceVolume >= destroyVolume && this.transform.position.z - Target.position.z <= 9)
             BreakBox();
     }
 

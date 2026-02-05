@@ -36,7 +36,7 @@ public class UltGauge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (UltGaugeImage.fillAmount <= 1.0)
+        if (UltGaugeImage.fillAmount <= 1.0 && PlayerMove.ismove)
         {
             UltGaugeImage.fillAmount += Time.deltaTime / 30;
         }
