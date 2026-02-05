@@ -28,10 +28,13 @@ public class PlayerHealth : MonoBehaviour
     [Header("HitSE")]
     public AudioClip hit;
     private AudioSource audiosourse;
+
+    CharacterVoiceSettiing characterVoiceSetting;
     // Start is called before the first frame update
     void Start()
     {
         audiosourse = GetComponent<AudioSource>();
+        characterVoiceSetting = GetComponent<CharacterVoiceSettiing>();
         Result.SetActive(false);
         currentHealth = maxHP;
         boxCol = GetComponent<BoxCollider>();
@@ -78,12 +81,14 @@ public class PlayerHealth : MonoBehaviour
         {
             audiosourse.PlayOneShot(hit);
             currentHealth--;
+            characterVoiceSetting.SetVoiceNumber = 11; // ダメージボイス
             anim.SetInteger("HP", currentHealth);
             Debug.Log("Player HP: " + currentHealth);
             // 死亡処理
             if (currentHealth <= 0)
             {
-               // Debug.Log("Player Dead");
+                // Debug.Log("Player Dead");
+                characterVoiceSetting.SetVoiceNumber = 10; // 死亡ボイス
                 boxCol.enabled = false; // 例: 衝突判定を無効化
                 PlayerMove.ismove = false;
                 anim.applyRootMotion= true;
