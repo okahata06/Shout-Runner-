@@ -1268,11 +1268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f752d3a51152f4e44a3ebe45ae24abcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FitTarget: {fileID: 0}
-  m_FitOnLateUpdate: 0
-  m_OnlyForChildren: 0
-  m_ShowUnmaskGraphic: 0
-  m_EdgeSmoothing: 0
 --- !u!114 &532673213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1439,7 +1434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb9714b62a114d45b65f30fc946ea5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TargetUnmask: {fileID: 532673212}
 --- !u!114 &644999394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2741,6 +2735,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1420724159}
   characterReactionOBJ: {fileID: 851134220}
+  ultGauge: {fileID: 686371872}
 --- !u!114 &1010404844
 MonoBehaviour:
   m_ObjectHideFlags: 0

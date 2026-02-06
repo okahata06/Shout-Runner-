@@ -1264,10 +1264,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62178937dc075bd4a88ec62ff451893d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IrisPanel: {fileID: 0}
+  unmask: {fileID: 0}
   ScoreText: {fileID: 226795679}
   VolumeText: {fileID: 313051455}
   TotalText: {fileID: 945544805}
   Ranking: {fileID: 0}
+  ShoutTitle: {fileID: 0}
+  taiko1: {fileID: 0}
+  taiko2: {fileID: 0}
+  startSE: {fileID: 0}
 --- !u!114 &941805145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,6 +1755,8 @@ MonoBehaviour:
   preInstantiate: 3
   generatedStageList: []
   ScoreText: {fileID: 1755913599}
+  BossText: {fileID: 0}
+  destroyBox: {fileID: 0}
 --- !u!4 &1272879755
 Transform:
   m_ObjectHideFlags: 0
@@ -2018,6 +2026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 2124104857}
   characterReactionOBJ: {fileID: 1016831185}
+  ultGauge: {fileID: 1605114850}
 --- !u!114 &1558643536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2112,6 +2121,7 @@ MonoBehaviour:
   HpEmpty: {fileID: 21300000, guid: 6c611ea2b14b35a4f90d5c78bc94a5ef, type: 3}
   maxHP: 3
   Result: {fileID: 941805142}
+  hit: {fileID: 0}
 --- !u!82 &1558643544
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2286,6 +2296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UltGaugeImage: {fileID: 1605114851}
+  gaugeMax: {fileID: 0}
 --- !u!114 &1605114851
 MonoBehaviour:
   m_ObjectHideFlags: 0

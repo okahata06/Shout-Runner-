@@ -16,14 +16,9 @@ public class UltGauge : MonoBehaviour
 
     private bool seOnce = true;
 
-    KeywordRecognizer keywordRecognizer;
+    bool MatuoCommand = false; 
+    bool AiruCommand = false;
 
-    string recognizedText = "";
-
-    //認識判定したい単語
-    private string[] keywords = new string[]
-    { VoiceCommand.まつお.ToString()
-    };
 
     public static float ultGauge = 0;
 
@@ -35,16 +30,17 @@ public class UltGauge : MonoBehaviour
         UltGaugeImage.fillAmount = 0;
         UltGaugeImage.color = new Color(1f, 1f, 1f, 0.5f);
 
-        // キーワード認識の初期化
-        keywordRecognizer = new KeywordRecognizer(keywords);
-        //イベントに登録
-        keywordRecognizer.OnPhraseRecognized += OnPhraseRecognized;
-        keywordRecognizer.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // まつおコマンドでゲージ満タン
+        if (MatuoCommand) {
+            UltGaugeImage.fillAmount = 1.0f;
+            MatuoCommand = false;
+        }
+
         if (UltGaugeImage.fillAmount <= 1.0 && PlayerMove.ismove)
         {
             UltGaugeImage.fillAmount += Time.deltaTime / 30;
@@ -79,7 +75,12 @@ public class UltGauge : MonoBehaviour
         //Debug.Log(ultGauge);
     }
 
-    private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
+    public bool SetMatuoCommand
+    {
+       set { MatuoCommand = value; }
+    }
+
+    /*private void OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
         
         // 認識された言葉に応じて処理
@@ -89,20 +90,6 @@ public class UltGauge : MonoBehaviour
         }
 
     }
+    */
 
-    void OnDestroy()
-    {
-        // クリーンアップ
-        if (keywordRecognizer != null && keywordRecognizer.IsRunning)
-        {
-            keywordRecognizer.Stop();
-        }
-        keywordRecognizer?.Dispose();
-
-    }
-
-    enum VoiceCommand
-    {
-        まつお,
-    }
 }

@@ -14,10 +14,12 @@ public class VoiceToText : MonoBehaviour
     [SerializeField, Header("キャラ反応表示用OBJ")]
     GameObject characterReactionOBJ;
 
+    [SerializeField, Header("ウルトゲージscript")]
+    UltGauge ultGauge;
+
     //  [SerializeField, Header("最低取得音量")]
     //float minVoiceVolume = 0.01f;
     Text characterReactionText;
-
     VoiceSetting voiceSetting;
     CharacterVoiceSettiing characterVoiceSettiing;
 
@@ -47,7 +49,8 @@ public class VoiceToText : MonoBehaviour
     //認識判定したい単語
     private string[] keywords = new string[]
     { VoiceCommand.ジャンプ.ToString(),VoiceCommand.伏せ.ToString(),VoiceCommand.なんでやねん.ToString(),
-      VoiceCommand.ひだり.ToString(),VoiceCommand.みぎ.ToString(),VoiceCommand.すすめ.ToString()
+      VoiceCommand.ひだり.ToString(),VoiceCommand.みぎ.ToString(),VoiceCommand.すすめ.ToString(),
+      VoiceCommand.まつお.ToString(),VoiceCommand.あいるー.ToString()
     };
     void Start()
     {
@@ -157,6 +160,13 @@ public class VoiceToText : MonoBehaviour
                 case nameof(VoiceCommand.すすめ):
                 Debug.Log("すすめ");
                 break;
+                case nameof(VoiceCommand.まつお):
+                Debug.Log("まつお");
+                ultGauge.SetMatuoCommand = true;
+                break;
+                case nameof(VoiceCommand.あいるー):
+                Debug.Log("あいるー");
+                break;
         }
     }
 
@@ -216,6 +226,8 @@ public class VoiceToText : MonoBehaviour
         ひだり,
         みぎ,
         伏せ,
+        まつお,
+        あいるー,
         Null,
     }
 
