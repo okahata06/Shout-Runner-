@@ -13,27 +13,37 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
     [SerializeField] GameObject IrisPanel;
     [SerializeField] RectTransform unmask;
 
-    private bool _sceneChange = true;//コルーチンを1度だけ処理する用
+    //コルーチンを1度だけ処理する用
+    private bool _sceneChange = true;
+    private bool _delRanking = true;
 
     readonly Vector2 IRIS_MID_SCALE1 = new Vector2(1.0f, 1.0f);
     readonly Vector2 IRIS_MID_SCALE2 = new Vector2(3.0f, 3.0f);
 
     KeywordRecognizer keywordRecognizer;
 
+    [Header("ランキング削除用UI")]
+    public GameObject DelRankingUI;
+
     private AudioSource audiosourse;
     [Header("SE")]
     public AudioClip startSE;
+    public AudioClip delSE;
 
     string recognizedText = "";
 
     //認識判定したい単語
     private string[] keywords = new string[]
-    { VoiceCommand.スタート.ToString()
+    { 
+        VoiceCommand.スタート.ToString(),
+        VoiceCommand.デリート.ToString()
     };
 
     void Start()
     {
         audiosourse = GetComponent<AudioSource>();
+
+        DelRankingUI.SetActive(false);
 
         // キーワード認識の初期化
         keywordRecognizer = new KeywordRecognizer(keywords);
@@ -43,10 +53,11 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
 
         IrisPanel.SetActive(false);
         _sceneChange = true;
+        _delRanking = true;
     }
 
     void Update()
-    { 
+    {
 
     }
 
@@ -64,6 +75,10 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
             _sceneChange = false;
         }
 
+        if (args.text == nameof(VoiceCommand.デリート) && _delRanking)
+        {
+            StartCoroutine(DelRanking());
+        }
     }
 
     void OnDestroy()
@@ -80,6 +95,7 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
     enum VoiceCommand
     {
         スタート,
+        デリート,
     }
 
     public void IrisOut()
@@ -102,5 +118,14 @@ public class TitleOnly_VoiceSetting : MonoBehaviour
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("Main");
     }
-
+    private IEnumerator DelRanking()
+    {
+        _delRanking = false;
+        audiosourse.PlayOneShot(delSE);
+        DelRankingUI.SetActive(true);
+        PlayerPrefs.DeleteAll();
+        yield return new WaitForSeconds(3f);
+        DelRankingUI.SetActive(false);
+        _delRanking = true;
+    }
 }

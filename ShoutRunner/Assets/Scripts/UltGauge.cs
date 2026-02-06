@@ -36,12 +36,12 @@ public class UltGauge : MonoBehaviour
     void Update()
     {
         // まつおコマンドでゲージ満タン
-        if (MatuoCommand) {
+        if (MatuoCommand && StageTips.gaugeChage) {
             UltGaugeImage.fillAmount = 1.0f;
             MatuoCommand = false;
         }
 
-        if (UltGaugeImage.fillAmount <= 1.0 && PlayerMove.ismove)
+        if (UltGaugeImage.fillAmount <= 1.0 && StageTips.gaugeChage)
         {
             UltGaugeImage.fillAmount += Time.deltaTime / 30;
         }

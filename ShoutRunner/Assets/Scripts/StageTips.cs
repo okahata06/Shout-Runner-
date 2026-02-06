@@ -11,6 +11,7 @@ public class StageTips : MonoBehaviour
     private int currentTipIndex;
     //
     public static int playerScore = 0;
+    public static bool gaugeChage;
     [Header("スコアを1増加させるのに必要な距離")]
     public float distancePerScore = 0.1f;
     [Header("生成するステージを変更するために必要なスコア")]
@@ -45,17 +46,22 @@ public class StageTips : MonoBehaviour
 
     private VoiceSetting voice_setting;//VoiceSettingスクリプト取得用
 
+    private void Awake()
+    {
+        playerScore = 0;
+    }
+
     void Start()
     {
         audiosourse=GetComponent<AudioSource>();
 
         BossText.SetActive(true);
 
+        gaugeChage = false;
+
         //初期化処理
         currentTipIndex = startTipIndex - 1;
         UpdateStage(preInstantiate);
-
-        playerScore = 0;
 
         //VoiceSettingスクリプトがついたオブジェクトを取得
         voice_setting = FindFirstObjectByType<VoiceSetting>();
@@ -77,8 +83,17 @@ public class StageTips : MonoBehaviour
             BossText.SetActive(false);
         }
 
-        //キャラクターの位置から現在のステージチップのインデックスを計算
-        int charaPositionIndex = (int)(character.position.z / StageTipSize);
+        if (lastPosition == 0)
+        {
+            gaugeChage = false;
+        }
+        else
+        {
+            gaugeChage = true;
+        }
+
+            //キャラクターの位置から現在のステージチップのインデックスを計算
+            int charaPositionIndex = (int)(character.position.z / StageTipSize);
         //次のステージチップに入ったらステージの更新処理を行う
         if (charaPositionIndex + preInstantiate > currentTipIndex)
         {
